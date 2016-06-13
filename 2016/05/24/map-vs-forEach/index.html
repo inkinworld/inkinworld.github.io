@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+ 
+ <meta name="description" content="比较map与forEach的区别">
+ 
+
+ 
+ 
+ <meta name="keywords" content="javascript">
+ 
+  
+  <title>map vs forEach | Hanhui&#39;s Blog</title>
+  
+  <script src="/javascripts/highlight.js"></script>
+  <link rel="stylesheet" href="/stylesheets/index.css">
+  <link rel="stylesheet" href="/stylesheets/github-markdown.css">
+  <link rel="stylesheet" href="/stylesheets/tomorrow.css">
+	<script>hljs.initHighlightingOnLoad();</script>
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+</head>
+<body>
+
+<header class="index-header">
+	<div class="header-box">
+		<button class="list-button">三</button>
+		<h1 class="blog-name"><a href="/">Hanhui's Blog</a></h1>
+		<button class="nav-button"><</button>
+		<div class="index-nav">
+			<ul>
+			  
+			    <li><a href="/">Home</a></li>
+			  
+			    <li><a href="/archives">Archives</a></li>
+			  
+			    <li><a href="https://github.com/inkinworld">Github</a></li>
+			  
+			</ul>	
+		</div>
+	</div>
+</header>
+
+	<div class="index-list">
+
+	<ul class="head-icon">
+		<li id="index-tip">
+			<img src="/images/head.jpg"><br>
+			<span></span>
+			<p></p>
+		</li>
+		
+			<li style="height:auto;padding:0px">
+				<ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/库/">库</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/教程/">教程</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/笔记/">笔记</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/经历/">经历</a><span class="category-list-count">1</span></li></ul>
+			</li>
+			<li style="height:auto;padding:0px">
+				<ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Chai/">Chai</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/">Hexo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Node/">Node</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Promise/">Promise</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javascript/">javascript</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/主题制作/">主题制作</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/总结/">总结</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/教程/">教程</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/测试/">测试</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/理解/">理解</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/面试/">面试</a><span class="tag-list-count">1</span></li></ul>
+			</li>
+		
+	</ul>	
+</div>
+	<div class="container">
+	<div class="post-articles">
+		<div class="article-info">
+			<h1 class="article-title">map vs forEach</h1>
+			
+				
+	<a class="article-tag" href="/tags/javascript/">javascript</a>
+	
+			
+			<span class="article-time">2016-05-24</span>
+		</div>		
+		<article class="markdown-body markdown shadow-set">
+			<blockquote>
+<p>二者传入参数的规则完全相同<br>都是数组对象的方法，他们有什么区别呢？</p>
+</blockquote>
+<a id="more"></a> 
+<p>可以直接阅读<a href="http://stackoverflow.com/questions/354909/is-there-a-difference-between-foreach-and-map" target="_blank" rel="external">stackoverflow的答案</a></p>
+<p>结论：map方法是forEach方法的超集。<br>二者都对数组对象的元素进行了遍历，但是map对象会将callback函数return的值存入新的数组作为返回值。<br>而forEach方法只进行了遍历调用callback，并没有返回值。</p>
+<p>map方法占用资源多，用于对数组进行转换操作，callback需要返回值</p>
+<pre><code>var a = [1,2,3,4,5];
+var b = a.map(function(value){
+    return value*value;
+})
+//b = [1,4,9,16,25];
+</code></pre><p>forEach方法进行遍历个元素,不需要生成对应数组，callback不需要返回值</p>
+<pre><code>var a = [1,2,3,4,5];
+var sum = 0;
+a.forEach(function(value){
+    sum += value;
+})
+//sum = 15
+</code></pre>
+		</article>
+	</div>	
+	<div class="toc-button"></div>
+
+<script type="text/javascript">
+function create_toc(){
+	var toc = [];
+	var article = document.querySelector('article');
+	if(article){
+		var list = article.querySelectorAll('*');
+		for(var j= i = 0; i < list.length;i++){
+			if(list[i].tagName == 'H3' || list[i].tagName == 'H2'){
+				list[i].id = 'toc' + j++;
+				toc.push(list[i])
+			}
+		}
+
+		var ul = document.createElement('ul');
+		var div_box = document.createElement('div');
+		ul.appendChild(div_box);
+		ul.id = "toc";
+		var ul2;
+		var is_first_h3 = true;
+		toc.forEach(function(e,i){
+			if(e.tagName == 'H2'){
+				is_first_h3 = true;
+				var h2 = document.createElement('li');
+				h2.innerText = e.innerText;
+				h2.tar = '#toc' + i;
+				ul.appendChild(h2);
+			}else{
+				if(is_first_h3){
+					is_first_h3 = false;
+					ul2 = document.createElement('ul');
+					ul.appendChild(ul2);
+				}
+				var h3 = document.createElement('li');
+				h3.innerText = e.innerText;
+				h3.tar = '#toc' + i;
+				ul2.appendChild(h3);
+			}
+		})
+
+		var parent_ele = document.querySelector('body');	
+		parent_ele.appendChild(ul);
+
+	}
+}
+
+create_toc();
+//委托toc事件
+var body = document.querySelector('body');
+var toc = document.querySelector('#toc');
+toc.addEventListener('click',function(evt){
+	var target = evt.target;
+	if(target.tagName == 'LI'){
+		body.scrollTop = 1000;
+		var move = document.querySelector(target.tar).offsetTop;
+		body.scrollTop = move - 120;
+	}
+})
+//为toc绑定按钮
+var toc_button = document.querySelector('.toc-button')
+toc_button.addEventListener('click',function(evt){
+	evt.target.classList.toggle('open');
+	toc.classList.toggle('open');
+})
+
+</script>
+	 
+
+<!-- DISQUS -->
+
+</div>
+</article>
+<div class="footer">
+      &copy; 2016 Hnahui
+      powered_by <a href="http://hexo.io/" target="_blank">Hexo</a>
+       <a href="https://github.com/inkinworld/Hexo-theme-Han" target="_blank">Theme from Han</a>
+       <span id="busuanzi_container_site_pv">本站总访问量<span id="busuanzi_value_site_pv"></span>次</span>
+</div>
+</body>
+</html>
+<script type="text/javascript">
+	var list_button = document.querySelector('.list-button');
+	var nav_button = document.querySelector('.nav-button')
+	var list = document.querySelector('.index-list');
+	var header = document.querySelector('header');
+	var nav = document.querySelector('.index-nav');
+	var blog_name = document.querySelector('.blog-name')
+
+	list_button.addEventListener('click',function(evt){
+		evt.target.classList.toggle('open')
+		list.classList.toggle('open')
+		header.classList.toggle('open')
+	},true)
+
+	nav_button.addEventListener('click',function(evt){
+		evt.target.classList.toggle('open1');
+		header.classList.toggle('open1');
+		list_button.classList.toggle('open1');
+		blog_name.classList.toggle('open1');
+	})
+</script>

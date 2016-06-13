@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+ 
+ <meta name="description" content="讨论什么是HTML实体，以及字符编码问题，javscript实现unicode码转字符">
+ 
+
+ 
+ 
+ <meta name="keywords" content="javascript">
+ 
+  
+  <title>HTML实体以及字符编码 | Hanhui&#39;s Blog</title>
+  
+  <script src="/javascripts/highlight.js"></script>
+  <link rel="stylesheet" href="/stylesheets/index.css">
+  <link rel="stylesheet" href="/stylesheets/github-markdown.css">
+  <link rel="stylesheet" href="/stylesheets/tomorrow.css">
+	<script>hljs.initHighlightingOnLoad();</script>
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+</head>
+<body>
+
+<header class="index-header">
+	<div class="header-box">
+		<button class="list-button">三</button>
+		<h1 class="blog-name"><a href="/">Hanhui's Blog</a></h1>
+		<button class="nav-button"><</button>
+		<div class="index-nav">
+			<ul>
+			  
+			    <li><a href="/">Home</a></li>
+			  
+			    <li><a href="/archives">Archives</a></li>
+			  
+			    <li><a href="https://github.com/inkinworld">Github</a></li>
+			  
+			</ul>	
+		</div>
+	</div>
+</header>
+
+	<div class="index-list">
+
+	<ul class="head-icon">
+		<li id="index-tip">
+			<img src="/images/head.jpg"><br>
+			<span></span>
+			<p></p>
+		</li>
+		
+			<li style="height:auto;padding:0px">
+				<ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/库/">库</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/教程/">教程</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/笔记/">笔记</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/经历/">经历</a><span class="category-list-count">1</span></li></ul>
+			</li>
+			<li style="height:auto;padding:0px">
+				<ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Chai/">Chai</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/">Hexo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Node/">Node</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Promise/">Promise</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javascript/">javascript</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/主题制作/">主题制作</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/总结/">总结</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/教程/">教程</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/测试/">测试</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/理解/">理解</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/面试/">面试</a><span class="tag-list-count">1</span></li></ul>
+			</li>
+		
+	</ul>	
+</div>
+	<div class="container">
+	<div class="post-articles">
+		<div class="article-info">
+			<h1 class="article-title">HTML实体以及字符编码</h1>
+			
+				
+	<a class="article-tag" href="/tags/javascript/">javascript</a>
+	
+			
+			<span class="article-time">2016-06-04</span>
+		</div>		
+		<article class="markdown-body markdown shadow-set">
+			<blockquote>
+<p>好久没写博客啦，Promise的实现示意图图画了也没更<br>这两天做爬虫遇到字符编码相关的问题，对学习到的内容做些总结<br>javscript实现unicode码转字符</p>
+</blockquote>
+<a id="more"></a> 
+<p>期间用cheerio时滥用html()方法，导致返回的字符都带有HTML实体，于是写了个模块来处理为字符串，最终发现，妈蛋，用html()方法当然会返回HTML实体啊，肯定有text()方法的啊，于是解决了一个不该解决的问题。。</p>
+<h2 id="什么是HTML实体？"><a href="#什么是HTML实体？" class="headerlink" title="什么是HTML实体？"></a>什么是HTML实体？</h2><p>由于HTML的编写需要使用一些特殊的字符，例如”&lt;”因此如果想让它能够以文本形式显示，而不是被解析为标签，就需要消除歧义，因此引入了HTML字符实体，就像转义文字的功能一般。</p>
+<blockquote>
+<p>HTML实体的实现是通过转义序列，就是通过一段字符表示一个特殊的字符，<br>HTML本身采用unicode编码，可以通过实体名称和实体编号两种方式进行引用</p>
+</blockquote>
+<p>例如：</p>
+<table>
+<thead>
+<tr>
+<th>输出字符</th>
+<th>描述</th>
+<th>实体名称</th>
+<th>实体编号</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>&lt;</td>
+<td>小于号</td>
+<td>&amp;lt;</td>
+<td>&amp;#60;</td>
+</tr>
+<tr>
+<td>&gt;</td>
+<td>大于号</td>
+<td>&amp;gt;</td>
+<td>&amp;#62;</td>
+</tr>
+<tr>
+<td>&amp;</td>
+<td>和号</td>
+<td>&amp;amp;</td>
+<td>&amp;#38;</td>
+</tr>
+<tr>
+<td>“</td>
+<td>引号</td>
+<td>&amp;quot;</td>
+<td>&amp;#34;</td>
+</tr>
+</tbody>
+</table>
+<p>你可能会问，对于’&lt;’的实体名称既然是&amp;lt;，那为什么&amp;lt;没有解析为’&lt;’呢？<br>答：其实你能读到的字符都是<strong>已经</strong>经过实体字符转义的，而这样的解析过程只执行一次，因此&amp;lt;没有解析为’&lt;’。</p>
+<blockquote>
+<p>HTML实体形式是’<strong>&amp;</strong>‘与’<strong>;</strong>‘这两个符号包着实体的名称或#+编号<br>‘;’不经过转义，因此要想输出&amp;lt;，只需要对’&amp;’进行转义，即用’&amp;’的HTML实体&amp;amp;表示’&amp;’，然后加上’lt’就可以。</p>
+</blockquote>
+<p>完整写法如下：</p>
+<pre><code>&amp;amp;lt
+</code></pre><h3 id="更多HTML实体"><a href="#更多HTML实体" class="headerlink" title="更多HTML实体"></a>更多HTML实体</h3><p>彩蛋时间，许多有趣的HTML实体</p>
+<blockquote>
+<p>&#9991;    &#9985;   &#10014;  &#10084;    &#10163;    &#10163;<br><a href="http://www.danshort.com/HTMLentities/index.php?w=dingb" target="_blank" rel="external"><strong>HTML实体大全点击就送</strong></a></p>
+</blockquote>
+<p>HTML实体或许你早就知道了，下面聊聊关于编码的问题</p>
+<h2 id="字符集"><a href="#字符集" class="headerlink" title="字符集"></a>字符集</h2><p>什么是字符集？<br>见而言是字符集是字符的集合，它定义了该集合具有哪些字符。虽然是集合，但字符集是有序的，每个字符都有对应的编号。<br>因此可以将其理解成一张字符的索引表，根据编号可以索引字符。<br>我们着重讨论unicode字符集，该字符集的字符都通过4字节，也就是32位二进制数据索引。</p>
+<h2 id="字符编码"><a href="#字符编码" class="headerlink" title="字符编码"></a>字符编码</h2><p>既然字符集本身的编码方式就能完成对字符的索引了，为什么还需要其他编码方式呢？<br>当然是为了节能环保了。。</p>
+<blockquote>
+<p>对于英语文本，需要的字符非常有限，如果采用unicode的编码方式，将浪费大量的存储空间，unicode编码方式每个字母需要4字节，而ASCII编码方式的每个字母只需要1字节<br>能够存储更多的信息，unicode的初衷是<strong>能够包含所有的语言</strong>，因此采用4字节的编码方式，如果采用其他的编码方式，既能兼容unicode的字符与编码的映射关系又能够节省存储空间，就可以提高存储效率（该编码方式可能只能编码unicode字符集的部分字符，如utf-8,一般文本也不需要整个unicode的字符）。</p>
+</blockquote>
+<p>那么问题来了，怎样的实现能够及兼容unicode的映射关系，又减少编码的长度呢？</p>
+<blockquote>
+<p>还记得高数吗？集合的映射方式就函数，此时有32个变量，通过32个变量获得结果，但对于特定区间的字符，只需要部分变量及足够了，比如编码后16位都是0的字符，如果通过特定的标记位描述该编码的区间，就可以省去多余的信息描述，以此来减少编码的长度。</p>
+</blockquote>
+<h3 id="UTF-8编码方式"><a href="#UTF-8编码方式" class="headerlink" title="UTF-8编码方式"></a>UTF-8编码方式</h3><p>该编码方式用1到4个字节编码一个字符。也就是说最多表示unicode集合的16分之1.</p>
+<blockquote>
+<p>二进制编码的<strong>第一个</strong>0前面出现的1的个数用来表明该编码是几个字节组成的<br>按字节读取，以10开头的字节表示该字节与前面的字节一同构成一个字符编码</p>
+</blockquote>
+<p>原理可见下表:<br>其中Byte1的数字为描述位，除此之外的字节的前两位‘10’表示同前面的字节一同构成一个字符编码，所有的x凑成unicode的对应编码。</p>
+<table>
+<thead>
+<tr>
+<th>Byte1</th>
+<th>Byte2</th>
+<th>Byte3</th>
+<th>Byte4</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0xxxxxxx</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>110xxxxx</td>
+<td>10xxxxxx</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>1110xxxx</td>
+<td>10xxxxxx</td>
+<td>10xxxxxx</td>
+<td></td>
+</tr>
+<tr>
+<td>11110xxx</td>
+<td>10xxxxxx</td>
+<td>10xxxxxx</td>
+<td>10xxxxxx</td>
+</tr>
+</tbody>
+</table>
+<p>我觉得这个想法超级巧妙，而且易于理解和实现，计算机先贤还是机智啊。</p>
+<h2 id="HTML实体与编码"><a href="#HTML实体与编码" class="headerlink" title="HTML实体与编码"></a>HTML实体与编码</h2><p>HTML使用unicode字符集，大大加强了互联网在国际间文字表述的便利性。<br>而HTML实体的实体编号采用的是该字符对应的unicode码。</p>
+<blockquote>
+<p>如此一来，可以用HTML实体表示所有的字符，只需要在’&amp;#’和’;’之间加入字符对用的编码就可以了。<br>javascript本身也使用unicode编码，因此内置的String对象具有转换字符与unicode编码的功能。</p>
+</blockquote>
+<h3 id="charCodeAt"><a href="#charCodeAt" class="headerlink" title="charCodeAt"></a>charCodeAt</h3><p>该方法能够返回字符串特定位置字符的unicode编码</p>
+<pre><code>str.charCodeAt(index)
+&apos;abc&apos;.charCodeAt(0)
+//97
+</code></pre><h3 id="fromCharCode"><a href="#fromCharCode" class="headerlink" title="fromCharCode"></a>fromCharCode</h3><p>该方法接受任意数量的unicode码作为参数，返回对应的unicode码拼接组成的字符串，搭配apply使用更方便。</p>
+<pre><code>String.fromCharCode(num1[, ...[, numN]])    
+String.fromCharCode(97,98,99)    
+//&quot;abc&quot;
+var list = [97,98,99];
+String.fromCharCode.apply(null,list)
+//&quot;abc&quot;
+</code></pre><p>unicode码是一个数值，可以使用16进制表示，因此有时我们也会采用16进制的方式表示。<br>如：</p>
+<pre><code>&amp;#x4E2D;&amp;#x6587;&amp;#x6D4B;&amp;#x8BD5;
+</code></pre><p>转义的结果是：&#x4E2D;&#x6587;&#x6D4B;&#x8BD5;</p>
+
+		</article>
+	</div>	
+	<div class="toc-button"></div>
+
+<script type="text/javascript">
+function create_toc(){
+	var toc = [];
+	var article = document.querySelector('article');
+	if(article){
+		var list = article.querySelectorAll('*');
+		for(var j= i = 0; i < list.length;i++){
+			if(list[i].tagName == 'H3' || list[i].tagName == 'H2'){
+				list[i].id = 'toc' + j++;
+				toc.push(list[i])
+			}
+		}
+
+		var ul = document.createElement('ul');
+		var div_box = document.createElement('div');
+		ul.appendChild(div_box);
+		ul.id = "toc";
+		var ul2;
+		var is_first_h3 = true;
+		toc.forEach(function(e,i){
+			if(e.tagName == 'H2'){
+				is_first_h3 = true;
+				var h2 = document.createElement('li');
+				h2.innerText = e.innerText;
+				h2.tar = '#toc' + i;
+				ul.appendChild(h2);
+			}else{
+				if(is_first_h3){
+					is_first_h3 = false;
+					ul2 = document.createElement('ul');
+					ul.appendChild(ul2);
+				}
+				var h3 = document.createElement('li');
+				h3.innerText = e.innerText;
+				h3.tar = '#toc' + i;
+				ul2.appendChild(h3);
+			}
+		})
+
+		var parent_ele = document.querySelector('body');	
+		parent_ele.appendChild(ul);
+
+	}
+}
+
+create_toc();
+//委托toc事件
+var body = document.querySelector('body');
+var toc = document.querySelector('#toc');
+toc.addEventListener('click',function(evt){
+	var target = evt.target;
+	if(target.tagName == 'LI'){
+		body.scrollTop = 1000;
+		var move = document.querySelector(target.tar).offsetTop;
+		body.scrollTop = move - 120;
+	}
+})
+//为toc绑定按钮
+var toc_button = document.querySelector('.toc-button')
+toc_button.addEventListener('click',function(evt){
+	evt.target.classList.toggle('open');
+	toc.classList.toggle('open');
+})
+
+</script>
+	 
+
+<!-- DISQUS -->
+
+</div>
+</article>
+<div class="footer">
+      &copy; 2016 Hnahui
+      powered_by <a href="http://hexo.io/" target="_blank">Hexo</a>
+       <a href="https://github.com/inkinworld/Hexo-theme-Han" target="_blank">Theme from Han</a>
+       <span id="busuanzi_container_site_pv">本站总访问量<span id="busuanzi_value_site_pv"></span>次</span>
+</div>
+</body>
+</html>
+<script type="text/javascript">
+	var list_button = document.querySelector('.list-button');
+	var nav_button = document.querySelector('.nav-button')
+	var list = document.querySelector('.index-list');
+	var header = document.querySelector('header');
+	var nav = document.querySelector('.index-nav');
+	var blog_name = document.querySelector('.blog-name')
+
+	list_button.addEventListener('click',function(evt){
+		evt.target.classList.toggle('open')
+		list.classList.toggle('open')
+		header.classList.toggle('open')
+	},true)
+
+	nav_button.addEventListener('click',function(evt){
+		evt.target.classList.toggle('open1');
+		header.classList.toggle('open1');
+		list_button.classList.toggle('open1');
+		blog_name.classList.toggle('open1');
+	})
+</script>

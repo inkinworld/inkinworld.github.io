@@ -1,0 +1,339 @@
+.markdown {
+    padding: 20px;
+    overflow: hidden;
+    margin-bottom: 2em;
+    font-size: 100%;
+    color: #333;
+    background-color: white;
+}
+
+.markdown em,
+.markdown i {
+    font-style: italic;
+    font-weight: 400
+}
+
+.markdown p {
+    margin: 0 0 20px;
+    padding: 0
+}
+
+.markdown p.scene {
+    border: 1px dashed #ddd;
+    padding: 10px;
+    background: #fafad2
+}
+
+.markdown p.scene span.scene_title {
+    background: #ffa07a;
+    padding: 2px 5px;
+    margin-right: 15px;
+    border-radius: 5px;
+    color: #fff
+}
+
+.markdown b,
+.markdown strong {
+    font-weight: 700
+}
+
+.markdown ol,
+.markdown ul {
+    margin: 20px 0;
+    padding-left: 10%
+}
+
+@media (min-width:769px) {
+    .markdown ol,
+    .markdown ul {
+        padding-left: 5%
+    }
+}
+
+.markdown ol li,
+.markdown ul li {
+    line-height: 2
+}
+
+.markdown ol li p,
+.markdown ul li p {
+    margin-bottom: 10px
+}
+
+.markdown ul li {
+    list-style-type: disc
+}
+
+.markdown ol li {
+    list-style-type: decimal
+}
+
+.markdown #footnotes,
+.markdown .footnotes {
+    font-size: .95em;
+    color: #555
+}
+
+.markdown hr {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border: 0;
+    border-top: 1px solid #eee
+}
+
+.markdown .h1,
+.markdown .h2,
+.markdown .h3,
+.markdown .h4,
+.markdown .h5,
+.markdown .h6,
+.markdown h1,
+.markdown h2,
+.markdown h3,
+.markdown h4,
+.markdown h5,
+.markdown h6 {
+    font-family: inherit;
+    font-weight: 700;
+    line-height: 1.4
+}
+
+.markdown .h1:first-child,
+.markdown .h2:first-child,
+.markdown .h3:first-child,
+.markdown .h4:first-child,
+.markdown .h5:first-child,
+.markdown .h6:first-child,
+.markdown h1:first-child,
+.markdown h2:first-child,
+.markdown h3:first-child,
+.markdown h4:first-child,
+.markdown h5:first-child,
+.markdown h6:first-child {
+    margin-top: 0
+}
+
+.markdown h1 {
+    margin: 15px 0 5px;
+    font-size: 1.6em
+}
+
+.markdown h2 {
+    font-size: 1.4em;
+    margin: 40px 10px 20px 0;
+    padding-left: 9px;
+    border-left: 6px solid #ff7e79
+}
+
+.markdown h3,
+.markdown h4 {
+    margin: 10px 0 5px;
+    padding-top: 10px
+}
+
+.markdown h3 {
+    font-size: 1.2em
+}
+
+.markdown h4 {
+    font-size: 1.1em
+}
+
+.markdown blockquote {
+    font-size: 1em;
+    font-style: normal;
+    padding: 30px 38px;
+    margin: 0 0 15px;
+    position: relative;
+    line-height: 1.8;
+    text-indent: 0;
+    border: none;
+    color: #888
+}
+
+.markdown blockquote p {
+    color: #575757
+}
+
+.markdown blockquote:after,
+.markdown blockquote:before {
+    font-family: Arial, serif;
+    font-size: 3em;
+    line-height: 1em;
+    font-weight: 700;
+    position: absolute
+}
+
+@media (min-width:769px) {
+    .markdown blockquote {
+        padding: 30px 40px
+    }
+    .markdown blockquote:after,
+    .markdown blockquote:before {
+        font-size: 3.5em
+    }
+}
+
+.markdown blockquote:before {
+    content: "“";
+    left: 12px;
+    top: 0;
+    color: #E0E0E0
+}
+
+.markdown blockquote:after {
+    content: "”";
+    right: 12px;
+    bottom: -31px;
+    color: #E0E0E0
+}
+
+.markdown blockquote>p {
+    margin-bottom: 0;
+    padding-bottom: 0
+}
+
+.markdown table {
+    margin: 1em 0;
+    background-color: #f9f9f9;
+    border: 1px solid #aaa;
+    color: #000
+}
+
+.markdown table td,
+.markdown table th,
+.markdown table tr {
+    padding: .3em
+}
+
+.markdown table th {
+    background-color: #f2f2f2;
+    text-align: center;
+    border: 1px solid #aaa
+}
+
+.markdown table tr {
+    display: table-row;
+    vertical-align: inherit;
+    border-color: inherit
+}
+
+.markdown table td {
+    border: 1px solid #aaa
+}
+
+.markdown a {
+    background: 0 0;
+    color: #f22f27;
+    text-decoration: none;
+    margin: 0;
+    padding: 0
+}
+
+.markdown a:hover {
+    color: #f55852;
+    text-decoration: underline
+}
+
+.markdown code ol {
+    color: #ccc
+}
+
+.markdown pre {
+    white-space: pre-wrap;
+    display: block;
+    background: #f8f8f8;
+    padding: 10px 20px;
+    border: none;
+    margin-bottom: 25px;
+    color: #666;
+    font-family: Courier, sans-serif
+}
+
+.markdown img {
+    margin-bottom: 15px;
+    height: auto;
+    max-width: 100%
+}
+
+.markdown sup {
+    top: -.5em
+}
+
+.markdown sub,
+.markdown sup {
+    font-size: 75%;
+    line-height: 0;
+    position: relative;
+    vertical-align: baseline
+}
+
+.markdown .footnotes {
+    font-size: .95em;
+    color: #494848
+}
+
+.markdown .row {
+    position: relative;
+    width: 100%;
+    padding: 1%;
+    margin: 5px 0 1.2em;
+    clear: both;
+    display: table;
+    background: #f8f8f8;
+    border: 1px solid #f3f3f3;
+    border-radius: 2px
+}
+
+.markdown .row .grid3,
+.markdown .row .grid4,
+.markdown .row .grid6 {
+    text-align: center;
+    float: left;
+    margin: 1%
+}
+
+.markdown .row .grid3 img,
+.markdown .row .grid4 img,
+.markdown .row .grid6 img {
+    max-width: 100%;
+    box-shadow: 1px 1px 3px rgba(88, 88, 88, .43);
+    margin: 0;
+    height: auto
+}
+
+.markdown .row .grid6 {
+    width: 48%
+}
+
+.markdown .row .grid4 {
+    width: 31.3%;
+    font-size: .85em
+}
+
+.markdown .row .grid3 {
+    width: 23%
+}
+
+.markdown .row .imagelightbox img {
+    margin-bottom: 10px
+}
+
+.markdown .grid2 {
+    list-style-type: none;
+    overflow: hidden;
+    clear: both
+}
+
+.markdown .row-img-text {
+    width: 100%;
+    padding: 0;
+    background: 0 0;
+    border: none
+}
+
+.markdown .row-img-text .grid6 {
+    width: 100%;
+    padding: 0;
+    text-align: left!important
+}

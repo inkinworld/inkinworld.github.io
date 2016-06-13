@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+ 
+ <meta name="description" content="关于Jvascript标准库的Promise的理解。">
+ 
+
+ 
+ 
+ <meta name="keywords" content="javascript,Promise,理解">
+ 
+  
+  <title>Promise小结 | Hanhui&#39;s Blog</title>
+  
+  <script src="/javascripts/highlight.js"></script>
+  <link rel="stylesheet" href="/stylesheets/index.css">
+  <link rel="stylesheet" href="/stylesheets/github-markdown.css">
+  <link rel="stylesheet" href="/stylesheets/tomorrow.css">
+	<script>hljs.initHighlightingOnLoad();</script>
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+</head>
+<body>
+
+<header class="index-header">
+	<div class="header-box">
+		<button class="list-button">三</button>
+		<h1 class="blog-name"><a href="/">Hanhui's Blog</a></h1>
+		<button class="nav-button"><</button>
+		<div class="index-nav">
+			<ul>
+			  
+			    <li><a href="/">Home</a></li>
+			  
+			    <li><a href="/archives">Archives</a></li>
+			  
+			    <li><a href="https://github.com/inkinworld">Github</a></li>
+			  
+			</ul>	
+		</div>
+	</div>
+</header>
+
+	<div class="index-list">
+
+	<ul class="head-icon">
+		<li id="index-tip">
+			<img src="/images/head.jpg"><br>
+			<span></span>
+			<p></p>
+		</li>
+		
+			<li style="height:auto;padding:0px">
+				<ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/库/">库</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/教程/">教程</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/笔记/">笔记</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/经历/">经历</a><span class="category-list-count">1</span></li></ul>
+			</li>
+			<li style="height:auto;padding:0px">
+				<ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Chai/">Chai</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/">Hexo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Node/">Node</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Promise/">Promise</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javascript/">javascript</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/主题制作/">主题制作</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/总结/">总结</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/教程/">教程</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/测试/">测试</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/理解/">理解</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/面试/">面试</a><span class="tag-list-count">1</span></li></ul>
+			</li>
+		
+	</ul>	
+</div>
+	<div class="container">
+	<div class="post-articles">
+		<div class="article-info">
+			<h1 class="article-title">Promise小结</h1>
+			
+				
+	<a class="article-tag" href="/tags/javascript/">javascript</a>
+
+	<a class="article-tag" href="/tags/Promise/">Promise</a>
+
+	<a class="article-tag" href="/tags/理解/">理解</a>
+	
+			
+			<span class="article-time">2016-05-11</span>
+		</div>		
+		<article class="markdown-body markdown shadow-set">
+			<blockquote>
+<p>关于Promise的实现有很多，而今Javascript标准库中的Promise已经能在广泛的浏览器中使用<br>通过Promise来解决Javascript中的异步编程问题快捷简便<br>做些总结，记录我的理解</p>
+</blockquote>
+<a id="more"></a> 
+<h2 id="什么是Promise？"><a href="#什么是Promise？" class="headerlink" title="什么是Promise？"></a>什么是Promise？</h2><p>MDN关于Promise的<a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Promise" target="_blank" rel="external">文档</a>.</p>
+<blockquote>
+<p>Promise 对象用于延迟(deferred) 计算和异步(asynchronous ) 计算.。一个Promise对象代表着一个还未完成，但预期将来会完成的操作。</p>
+</blockquote>
+<p>Promsie本身是个状态机，具有</p>
+<p>1.pending: 初始状态, 非 fulfilled 或 rejected.<br>2.fulfilled: 成功的操作.<br>3.rejected: 失败的操作.</p>
+<p>三个状态，其中2,3状态又称resolved状态，即许诺已解决、确定。</p>
+<p>语法：</p>
+<pre><code>new Promise(executor);
+new Promise(function(fulfill, reject) { ... });
+</code></pre><h3 id="核心理解"><a href="#核心理解" class="headerlink" title="核心理解:"></a><strong>核心理解</strong>:</h3><p>Promise构造函数的参数是一executor函数，这个executor函数并没有<strong>完整</strong>的执行过程，<br>它将其中的<strong>部分</strong>执行过程用resolve和reject在过程中表示。<br>在Promise被“解决”(resolve，即判定是fulfilled或rejected)后才能确定那一部分执行过程会被执行。</p>
+<p>Promise,就像他的字面含义一样,<strong>只是</strong>一个许诺。</p>
+<blockquote>
+<p>举个例子：<br>”我答应你，打赢这场仗就回家娶你“<br>打赢(fulfilled)，答应你回家（仅仅是答应，并没有执行）<br>阵亡(reject)，只能失信于人（许诺未能实现，死了，没有后续的行动）</p>
+</blockquote>
+<p>这就是Promise，只是一个许诺，没有下文。</p>
+<h2 id="许诺（Promsie）之后呢"><a href="#许诺（Promsie）之后呢" class="headerlink" title="许诺（Promsie）之后呢"></a>许诺（Promsie）之后呢</h2><p>然而仅仅只有许诺是没有意义的，还需要许诺后的行动，履行诺言</p>
+<h3 id="Promsie-then"><a href="#Promsie-then" class="headerlink" title="Promsie.then"></a>Promsie.then</h3><pre><code>var p = new Promise(function(resolve, reject) {
+  resolve(&quot;成功!&quot;);
+  // or
+  // reject (&quot;错误!&quot;);
+});
+p.then(onFulfilled, onRejected);
+</code></pre><blockquote>
+<p>then方法它有两个参数，分别为Promise在 success 和 failure 情况下的回调函数。</p>
+</blockquote>
+<p>也就是说Promsie的executor根据具体执行情况，resolve出之后要执行then方法传入的对应函数</p>
+<blockquote>
+<p>回答刚才打仗立Flag的例子<br>Promsies是许诺，参数executor是战争的过程<br>最终战争结束(resolved)<br>通过then(resolve, reject)履行承诺<br>胜利–&gt;fulfilled–&gt;执行resolve（回家取妹子）<br>阵亡–&gt;rejected–&gt;执行reject（马革裹尸，gg）</p>
+</blockquote>
+<p>并且then方法的返回值也是一个Promsie对象，既然如此p.then()的返回值依旧可以使用then方法，来定义新的（返回）的诺言（Promise）resolved后的执行对象</p>
+<blockquote>
+<p>继续恶俗的例子好了<br>胜利–&gt;fulfilled–&gt;执行resolve（回家取妹子）<br>回家取妹子函数（resolve）的内容是承诺（新的Promsie2）给妹子幸福<br>Promise2作为then函数的返回值<br>可以继续调用then方法，Promise().then(resolve, reject).then(resolve2, reject2)<br>通过then(resolve2, reject2)履行承诺(Promise)<br>给妹子幸福–&gt;fulfilled–&gt;执行resolve（白头偕老）<br>欺骗妹子–&gt;rejected–&gt;执行reject（变回单身狗）<br>全剧终</p>
+</blockquote>
+<h3 id="Promise-resolve的疑惑"><a href="#Promise-resolve的疑惑" class="headerlink" title="Promise.resolve的疑惑"></a>Promise.resolve的疑惑</h3><p>理解了Promise对象本身的概念，其他方法就变得非常好理解了<br>但Promise.resolve让人困惑<br>前面提到，Promise对象本身是个状态机，通常情况下executor的执行结果决定了状态机的状态变化，(变成fulfilled,或rejected，这个状态决定了之后是执行resolve函数还是reject函数)<br>但也可以通过手动方式改变Promise的状态，觉得之后执行的函数，这个手动方式就是resolve。</p>
+<p>以下是<a href="https://www.promisejs.org/patterns/" target="_blank" rel="external">Promises.org</a>的示例代码：</p>
+<pre><code>var value = 10;
+var promiseForValue = Promise.resolve(value);
+// equivalent to
+var promiseForValue = new Promise(function (resolve) {
+  resolve(value);
+});
+</code></pre><blockquote>
+<p>可以看出<strong>对于普通对象</strong>resolve方法完成了两部分操作<br>1.够早了一个Promise对象<br>2.将这个Promise对象的状态变更为fulfilled<br>这意味着再对返回的Promised对象使用then方法后，会执行then方法参数中的resolve</p>
+</blockquote>
+<p>这个方法主要用于thenable对象，即具有then方法的对象<br>将具有then方法的对象转变为Promise对象。</p>
+<pre><code>var jQueryPromise = $.ajax(&apos;/ajax-endpoint&apos;);
+var realPromise = Promise.resolve(jQueryPromise);
+// equivalent to
+var realPromise = new Promise(function (fulfill, reject) {
+  jQueryPromise.then(fulfill, reject);
+});
+</code></pre><blockquote>
+<p>脱离特定的背景，对技术概念的理解就会产生困惑<br>在原生支持Promise之前，有各式各样的库实现了Promise<br>他们绝大多数遵循了<a href="https://github.com/promises-aplus/promises-spec" target="_blank" rel="external">Promises/A+规范</a>,<br>因此这些库实现的Promise对象都是thenable的<br>可以使用Promise.resolve将第三方实现的Promise对象转化为原生的promsie对象使用</p>
+</blockquote>
+<p>为什么能将其他库的Promise对象转化为当前库实现的Promise呢?<br>其实并没有发生转化，因为任何Promsie的实现都是异步操作，任何Promise的实现本身就是处理异步操作的。<br>这样一来，将异步操作传入PromiseAO构造函数就是顺理成章的事情了。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>再次开坑，打算写一写Promise的实现。<br>大概谈了谈自己的想法，欢迎指正。<br>关于Promise的使用可以参考：<br><a href="https://www.promisejs.org" target="_blank" rel="external">promise.org</a><br><a href="http://efe.baidu.com/blog/promises-anti-pattern/" target="_blank" rel="external">谈谈使用 promise 时候的一些反模式</a><br>Promise的入门<a href="http://www.html5rocks.com/zh/tutorials/es6/promises/" target="_blank" rel="external">JavaScript Promises</a><br>深入浅出NodeJS关于Promise的内容</p>
+
+		</article>
+	</div>	
+	<div class="toc-button"></div>
+
+<script type="text/javascript">
+function create_toc(){
+	var toc = [];
+	var article = document.querySelector('article');
+	if(article){
+		var list = article.querySelectorAll('*');
+		for(var j= i = 0; i < list.length;i++){
+			if(list[i].tagName == 'H3' || list[i].tagName == 'H2'){
+				list[i].id = 'toc' + j++;
+				toc.push(list[i])
+			}
+		}
+
+		var ul = document.createElement('ul');
+		var div_box = document.createElement('div');
+		ul.appendChild(div_box);
+		ul.id = "toc";
+		var ul2;
+		var is_first_h3 = true;
+		toc.forEach(function(e,i){
+			if(e.tagName == 'H2'){
+				is_first_h3 = true;
+				var h2 = document.createElement('li');
+				h2.innerText = e.innerText;
+				h2.tar = '#toc' + i;
+				ul.appendChild(h2);
+			}else{
+				if(is_first_h3){
+					is_first_h3 = false;
+					ul2 = document.createElement('ul');
+					ul.appendChild(ul2);
+				}
+				var h3 = document.createElement('li');
+				h3.innerText = e.innerText;
+				h3.tar = '#toc' + i;
+				ul2.appendChild(h3);
+			}
+		})
+
+		var parent_ele = document.querySelector('body');	
+		parent_ele.appendChild(ul);
+
+	}
+}
+
+create_toc();
+//委托toc事件
+var body = document.querySelector('body');
+var toc = document.querySelector('#toc');
+toc.addEventListener('click',function(evt){
+	var target = evt.target;
+	if(target.tagName == 'LI'){
+		body.scrollTop = 1000;
+		var move = document.querySelector(target.tar).offsetTop;
+		body.scrollTop = move - 120;
+	}
+})
+//为toc绑定按钮
+var toc_button = document.querySelector('.toc-button')
+toc_button.addEventListener('click',function(evt){
+	evt.target.classList.toggle('open');
+	toc.classList.toggle('open');
+})
+
+</script>
+	 
+
+<!-- DISQUS -->
+
+</div>
+</article>
+<div class="footer">
+      &copy; 2016 Hnahui
+      powered_by <a href="http://hexo.io/" target="_blank">Hexo</a>
+       <a href="https://github.com/inkinworld/Hexo-theme-Han" target="_blank">Theme from Han</a>
+       <span id="busuanzi_container_site_pv">本站总访问量<span id="busuanzi_value_site_pv"></span>次</span>
+</div>
+</body>
+</html>
+<script type="text/javascript">
+	var list_button = document.querySelector('.list-button');
+	var nav_button = document.querySelector('.nav-button')
+	var list = document.querySelector('.index-list');
+	var header = document.querySelector('header');
+	var nav = document.querySelector('.index-nav');
+	var blog_name = document.querySelector('.blog-name')
+
+	list_button.addEventListener('click',function(evt){
+		evt.target.classList.toggle('open')
+		list.classList.toggle('open')
+		header.classList.toggle('open')
+	},true)
+
+	nav_button.addEventListener('click',function(evt){
+		evt.target.classList.toggle('open1');
+		header.classList.toggle('open1');
+		list_button.classList.toggle('open1');
+		blog_name.classList.toggle('open1');
+	})
+</script>

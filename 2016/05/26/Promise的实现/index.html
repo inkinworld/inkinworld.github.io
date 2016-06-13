@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+ 
+ <meta name="description" content="实现javascript中的Promise">
+ 
+
+ 
+ 
+ <meta name="keywords" content="javascript,Promise">
+ 
+  
+  <title>Promise的实现（有图有真相） | Hanhui&#39;s Blog</title>
+  
+  <script src="/javascripts/highlight.js"></script>
+  <link rel="stylesheet" href="/stylesheets/index.css">
+  <link rel="stylesheet" href="/stylesheets/github-markdown.css">
+  <link rel="stylesheet" href="/stylesheets/tomorrow.css">
+	<script>hljs.initHighlightingOnLoad();</script>
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+</head>
+<body>
+
+<header class="index-header">
+	<div class="header-box">
+		<button class="list-button">三</button>
+		<h1 class="blog-name"><a href="/">Hanhui's Blog</a></h1>
+		<button class="nav-button"><</button>
+		<div class="index-nav">
+			<ul>
+			  
+			    <li><a href="/">Home</a></li>
+			  
+			    <li><a href="/archives">Archives</a></li>
+			  
+			    <li><a href="https://github.com/inkinworld">Github</a></li>
+			  
+			</ul>	
+		</div>
+	</div>
+</header>
+
+	<div class="index-list">
+
+	<ul class="head-icon">
+		<li id="index-tip">
+			<img src="/images/head.jpg"><br>
+			<span></span>
+			<p></p>
+		</li>
+		
+			<li style="height:auto;padding:0px">
+				<ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/库/">库</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/教程/">教程</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/笔记/">笔记</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/经历/">经历</a><span class="category-list-count">1</span></li></ul>
+			</li>
+			<li style="height:auto;padding:0px">
+				<ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Chai/">Chai</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/">Hexo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Node/">Node</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Promise/">Promise</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javascript/">javascript</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/主题制作/">主题制作</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/总结/">总结</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/教程/">教程</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/测试/">测试</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/理解/">理解</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/面试/">面试</a><span class="tag-list-count">1</span></li></ul>
+			</li>
+		
+	</ul>	
+</div>
+	<div class="container">
+	<div class="post-articles">
+		<div class="article-info">
+			<h1 class="article-title">Promise的实现（有图有真相）</h1>
+			
+				
+	<a class="article-tag" href="/tags/javascript/">javascript</a>
+
+	<a class="article-tag" href="/tags/Promise/">Promise</a>
+	
+			
+			<span class="article-time">2016-05-26</span>
+		</div>		
+		<article class="markdown-body markdown shadow-set">
+			<blockquote>
+<p>看了一天，终于明白了，非常有趣！<br>动手实现Promise，满足你的好奇心233</p>
+</blockquote>
+<a id="more"></a>
+<p>Promise提高了JavaScript的异步编程的体验，其中then的链式调用方法让人停不下来，<br>现有许多Promise的实现方式，还有什么比了解轮子本身更让人兴奋的呢？!<br>翻阅了许多博客，对实现方法还是有些晕，最终在阅读了<a href="https://www.promisejs.org/implementing/" target="_blank" rel="external">Promise.org</a>的文章后终于了解一种实现方式，虽然原文有诸多解释，但我还是啃了好久，在此记录我的分析。</p>
+<p><strong>这里直接分析 <a href="https://www.promisejs.org/implementing/" target="_blank" rel="external">Promise.org</a> 的代码逻辑</strong><br>要是直接看懂了的话，就可以关闭本文啦，如果有些疑惑，希望下面的内容有所帮助</p>
+<h2 id="Promise对象是一个状态机"><a href="#Promise对象是一个状态机" class="headerlink" title="Promise对象是一个状态机"></a>Promise对象是一个状态机</h2><p>在各类介绍Promise概念的文章中都有对Promise状态的介绍</p>
+<pre><code>1.pending: 初始状态, 非 fulfilled 或 rejected.
+2.fulfilled: 成功的操作.
+3.rejected: 失败的操作.
+</code></pre><p>这里就不再赘述，既然Promise对象是一台状态机，那状态由谁来改变呢？</p>
+<h3 id="谁改变了Promises对象的状态？"><a href="#谁改变了Promises对象的状态？" class="headerlink" title="谁改变了Promises对象的状态？"></a>谁改变了Promises对象的状态？</h3><p>答案是：Promise构造函数的传入参数executor<strong>的执行状态</strong>，改变了Promise对象的状态。如果executor正常执行（如进行文件读取正常返回，网络通信正常返回数据），状态机的状态变为fulfilled,反之变为rejected。<br>并且<strong>将Promise对象的value属性赋值为executor获得的数据</strong>。</p>
+<h3 id="状态改变后会发生什么？"><a href="#状态改变后会发生什么？" class="headerlink" title="状态改变后会发生什么？"></a>状态改变后会发生什么？</h3><p>每当Promise对象的状态改变后，都会检查回调队列handlers 是否有可执行的对象，如果有就执行相应的回调函数，如果为空就啥也不干，等有回调队列handlers 中有可执行对象时再执行对应的回调函数（将Promise对象的value作为参数传入）。</p>
+<h3 id="谁来添加回调队列里的可执行对象呢？"><a href="#谁来添加回调队列里的可执行对象呢？" class="headerlink" title="谁来添加回调队列里的可执行对象呢？"></a>谁来添加回调队列里的可执行对象呢？</h3><p>在此种实现方式中使用的是<strong>done</strong>方法，每个Promise对象都拥有done方法，传入handlers可执行对象，执行该方法时会检查Promise对象的状态，如果Promise处于非pending状态，将直接执行对应的回掉函数 （将Promise对象的value作为参数传入），如果此时Promise对象还处于pending状态，则将执行对象放入handlers中。<br>如此一来，就可以避免handlers为空时出现的错误，实现回调函数的异步调用。</p>
+<h3 id="怎么实现链式调用的？"><a href="#怎么实现链式调用的？" class="headerlink" title="怎么实现链式调用的？"></a>怎么实现链式调用的？</h3><p>这其实有点像是“语法糖”，既然已经通过done方法实现了回调函数的异步调用功能，现在需要实现的就是怎么将Promise对象的value处理结果传递下去。</p>
+<blockquote>
+<p>值得注意的是，then方法返回的是一个新的Promise对象，该Promise对象的的excecutor中要执行前一级Promise对象的done方法。</p>
+</blockquote>
+<p>之所以这么做是因为前面我们提到过Promise状态改变会<strong>将Promise对象的value属性赋值为executor获得的数据</strong><br>。因此将前一级的回调函数的执行结果传递给当前Promise对象的resolve方法就可以实现，value处理结果的传递。</p>
+<blockquote>
+<p>以上只粗略的描述大致的实现思路，其中的resolve方法的递归调用，状态的具体改变方法都没有详细叙述，最好的理解方式还是多看几次源码。</p>
+</blockquote>
+<h3 id="then方法实现关键概念"><a href="#then方法实现关键概念" class="headerlink" title="then方法实现关键概念"></a>then方法实现关键概念</h3><ol>
+<li>每个Promise对象都有一个doResolve私有方法，该方法在执行时可以对value值产生作用，且仅可执行一次，因此value也只能改变一次。Promise对象通过构造函数将resolve暴露给的executor参数。</li>
+<li>只要能够引用到特定Promise的done方法，就能在任意环境下修改对应Promise对象的handlers。通过执行handlers中的回调函数，可以将Promise的value值作为参数进行后续操作，操作结束的处理结果，我们希望能够传递下去。</li>
+<li>要想实现链式调用毫无疑问需要将Promise1的value1的处理结果（<strong>注意</strong>:是处理结果而非value1，value1在Promise1状态发生改变时就被doResolve1赋值了）传递给Promise2，作为Promise2的value值。</li>
+<li>value只能被doResolve方法改变，doResolve方法暴露给构造函数的executor参数。done方法能够暴露value的处理结果，把这些联系起来就是，在Promise2的executor中执行Promise1的done方法，通过Promise1.done将value1的处理结果暴露给Promise2的doResolve，这样就实现了value1的处理结果传递给了value2，实现了数据链。</li>
+</ol>
+<h2 id="上图啦！！"><a href="#上图啦！！" class="headerlink" title="上图啦！！"></a>上图啦！！</h2><p>说了这么多一图胜千言。</p>
+<h3 id="new-Promise时发生了什么？"><a href="#new-Promise时发生了什么？" class="headerlink" title="new Promise时发生了什么？"></a>new Promise时发生了什么？</h3><img title="图片标题" alt="图片说明" src="http://7xv35y.com1.z0.glb.clouddn.com/static/images/Promise实现原理.jpg">
+<h3 id="Promise-done的实现"><a href="#Promise-done的实现" class="headerlink" title="Promise.done的实现"></a>Promise.done的实现</h3><img title="图片标题" alt="图片说明" src="http://7xv35y.com1.z0.glb.clouddn.com/static/images/Promise.done实现.jpg">
+
+		</article>
+	</div>	
+	<div class="toc-button"></div>
+
+<script type="text/javascript">
+function create_toc(){
+	var toc = [];
+	var article = document.querySelector('article');
+	if(article){
+		var list = article.querySelectorAll('*');
+		for(var j= i = 0; i < list.length;i++){
+			if(list[i].tagName == 'H3' || list[i].tagName == 'H2'){
+				list[i].id = 'toc' + j++;
+				toc.push(list[i])
+			}
+		}
+
+		var ul = document.createElement('ul');
+		var div_box = document.createElement('div');
+		ul.appendChild(div_box);
+		ul.id = "toc";
+		var ul2;
+		var is_first_h3 = true;
+		toc.forEach(function(e,i){
+			if(e.tagName == 'H2'){
+				is_first_h3 = true;
+				var h2 = document.createElement('li');
+				h2.innerText = e.innerText;
+				h2.tar = '#toc' + i;
+				ul.appendChild(h2);
+			}else{
+				if(is_first_h3){
+					is_first_h3 = false;
+					ul2 = document.createElement('ul');
+					ul.appendChild(ul2);
+				}
+				var h3 = document.createElement('li');
+				h3.innerText = e.innerText;
+				h3.tar = '#toc' + i;
+				ul2.appendChild(h3);
+			}
+		})
+
+		var parent_ele = document.querySelector('body');	
+		parent_ele.appendChild(ul);
+
+	}
+}
+
+create_toc();
+//委托toc事件
+var body = document.querySelector('body');
+var toc = document.querySelector('#toc');
+toc.addEventListener('click',function(evt){
+	var target = evt.target;
+	if(target.tagName == 'LI'){
+		body.scrollTop = 1000;
+		var move = document.querySelector(target.tar).offsetTop;
+		body.scrollTop = move - 120;
+	}
+})
+//为toc绑定按钮
+var toc_button = document.querySelector('.toc-button')
+toc_button.addEventListener('click',function(evt){
+	evt.target.classList.toggle('open');
+	toc.classList.toggle('open');
+})
+
+</script>
+	 
+
+<!-- DISQUS -->
+
+</div>
+</article>
+<div class="footer">
+      &copy; 2016 Hnahui
+      powered_by <a href="http://hexo.io/" target="_blank">Hexo</a>
+       <a href="https://github.com/inkinworld/Hexo-theme-Han" target="_blank">Theme from Han</a>
+       <span id="busuanzi_container_site_pv">本站总访问量<span id="busuanzi_value_site_pv"></span>次</span>
+</div>
+</body>
+</html>
+<script type="text/javascript">
+	var list_button = document.querySelector('.list-button');
+	var nav_button = document.querySelector('.nav-button')
+	var list = document.querySelector('.index-list');
+	var header = document.querySelector('header');
+	var nav = document.querySelector('.index-nav');
+	var blog_name = document.querySelector('.blog-name')
+
+	list_button.addEventListener('click',function(evt){
+		evt.target.classList.toggle('open')
+		list.classList.toggle('open')
+		header.classList.toggle('open')
+	},true)
+
+	nav_button.addEventListener('click',function(evt){
+		evt.target.classList.toggle('open1');
+		header.classList.toggle('open1');
+		list_button.classList.toggle('open1');
+		blog_name.classList.toggle('open1');
+	})
+</script>

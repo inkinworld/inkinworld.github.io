@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+ 
+ <meta name="description" content="2016阿里实习生前端面试总结">
+ 
+
+ 
+ 
+ <meta name="keywords" content="面试,总结">
+ 
+  
+  <title>面试小结 | Hanhui&#39;s Blog</title>
+  
+  <script src="/javascripts/highlight.js"></script>
+  <link rel="stylesheet" href="/stylesheets/index.css">
+  <link rel="stylesheet" href="/stylesheets/github-markdown.css">
+  <link rel="stylesheet" href="/stylesheets/tomorrow.css">
+	<script>hljs.initHighlightingOnLoad();</script>
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+</head>
+<body>
+
+<header class="index-header">
+	<div class="header-box">
+		<button class="list-button">三</button>
+		<h1 class="blog-name"><a href="/">Hanhui's Blog</a></h1>
+		<button class="nav-button"><</button>
+		<div class="index-nav">
+			<ul>
+			  
+			    <li><a href="/">Home</a></li>
+			  
+			    <li><a href="/archives">Archives</a></li>
+			  
+			    <li><a href="https://github.com/inkinworld">Github</a></li>
+			  
+			</ul>	
+		</div>
+	</div>
+</header>
+
+	<div class="index-list">
+
+	<ul class="head-icon">
+		<li id="index-tip">
+			<img src="/images/head.jpg"><br>
+			<span></span>
+			<p></p>
+		</li>
+		
+			<li style="height:auto;padding:0px">
+				<ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/库/">库</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/教程/">教程</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/笔记/">笔记</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/经历/">经历</a><span class="category-list-count">1</span></li></ul>
+			</li>
+			<li style="height:auto;padding:0px">
+				<ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Chai/">Chai</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/">Hexo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Node/">Node</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Promise/">Promise</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javascript/">javascript</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/主题制作/">主题制作</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/总结/">总结</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/教程/">教程</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/测试/">测试</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/理解/">理解</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/面试/">面试</a><span class="tag-list-count">1</span></li></ul>
+			</li>
+		
+	</ul>	
+</div>
+	<div class="container">
+	<div class="post-articles">
+		<div class="article-info">
+			<h1 class="article-title">面试小结</h1>
+			
+				
+	<a class="article-tag" href="/tags/面试/">面试</a>
+
+	<a class="article-tag" href="/tags/总结/">总结</a>
+	
+			
+			<span class="article-time">2016-05-20</span>
+		</div>		
+		<article class="markdown-body markdown shadow-set">
+			<blockquote>
+<p>这次面试经历有些特别，两个小时面了三次<br>对面试过程中印象深刻的问题做下总结</p>
+</blockquote>
+<a id="more"></a> 
+<p>在内推回绝后，经过了笔试，收到阿里的面试通知，与腾讯面试相同的酒店面试，让我多少感觉比较放松。<br>提前40分钟到达面试地点，报名登记后没多久就收到了一面通知。<br>一面前辈，问的几个问题让我觉得非常有趣，也感受到自身许多的不足,在此记录总结一下。</p>
+<h2 id="一面"><a href="#一面" class="headerlink" title="一面"></a>一面</h2><p>在对写的小项目的询问后，进入知识考察环节（=。=姑且这么叫吧）</p>
+<h3 id="Q1-如合在canvas上画一条一像素宽的线-一个一像素的点"><a href="#Q1-如合在canvas上画一条一像素宽的线-一个一像素的点" class="headerlink" title="Q1.如合在canvas上画一条一像素宽的线/一个一像素的点"></a>Q1.如合在canvas上画一条一像素宽的线/一个一像素的点</h3><p>现在回忆了下，发现当时误会了考官的意思，我理解成画一条一像素的线，当时懵比的回答canvas能进行像素级的操作BALABALA..<br>其实考官是要考察，如何在canvas中画出奇数宽度的线，冏<br>如果直接向这样定义线的宽度</p>
+<pre><code>ctx.lineWidth = 1;
+ctx.beginPath();
+ctx.moveTo(100,100);
+ctx.lineTo(100,150);
+ctx.stroke();
+</code></pre><p>是没有作用的画出的将是俩像素宽的线，原因可以参考<a href="http://stackoverflow.com/questions/7530593/html5-canvas-and-line-width" target="_blank" rel="external">html5-canvas-and-line-width</a></p>
+<blockquote>
+<p>对奇数宽度的线宽使用小数处理</p>
+</blockquote>
+<pre><code>ctx.lineWidth = 1;
+ctx.beginPath();    
+ctx.moveTo(100.5,100);
+ctx.lineTo(100.5,150);
+ctx.stroke();
+</code></pre><p>这样画出的线的颜色和宽度才会符合预期。</p>
+<p>至于画出一个点，可以直接看这里<a href="http://stackoverflow.com/questions/7812514/drawing-a-dot-on-html5-canvas" target="_blank" rel="external">drawing-a-dot-on-html5-canvas</a></p>
+<h3 id="Q2-1-2-3-map-parseInt-会输出什么？"><a href="#Q2-1-2-3-map-parseInt-会输出什么？" class="headerlink" title="Q2.[1,2,3].map(parseInt)会输出什么？"></a>Q2.[1,2,3].map(parseInt)会输出什么？</h3><p>答案是[1, NaN, NaN];<br>map函数会给接受的参数传递value和index两个参数</p>
+<blockquote>
+<p>parseInt() 函数将给定的字符串以指定基数（radix/base）解析成为整数(十进制的)。<br>parseInt会接受两个参数parseInt(string, radix);<br>string是需要转换的值，radix是数制的基数;<br>如果对应的基数的数值不存在则返回NaN</p>
+</blockquote>
+<p>这道题在考官引导下也没有回答正确，还是要加强基础知识，对常用函数还应加深了解。</p>
+<h3 id="Q-3怎么实现小于12px的字体大小"><a href="#Q-3怎么实现小于12px的字体大小" class="headerlink" title="Q.3怎么实现小于12px的字体大小"></a>Q.3怎么实现小于12px的字体大小</h3><p>这个需求在之前的开发过程中没有处理过，因为chrome规范要求不应存在这么小的字体，但实际需求是存在的</p>
+<p>当时我只想到既然字体的限制是无法改变的只能对渲染结果做处理，那就是<strong>transform</strong></p>
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;&lt;/title&gt;
+    &lt;style type=&quot;text/css&quot;&gt;
+        p:nth-of-type(1){
+            transform: scale(0.5, 0.5);
+        }        
+    &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;p style=&quot;font-size:6px;&quot;&gt;test 6px&lt;/p&gt;
+    &lt;p style=&quot;font-size:12px;&quot;&gt;test 12px&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre><p>需要注意的是transform属性只能对具有block属性的元素起作用，因此对<span>生效需要将其diplay设置为inline-block。并且变形也会导致bakgrond变形，因此应当将文字元素与背景元素分离。</span></p>
+<h3 id="Q-4-为什么inline-block的li之间有多余的像素，如何去除"><a href="#Q-4-为什么inline-block的li之间有多余的像素，如何去除" class="headerlink" title="Q.4 为什么inline-block的li之间有多余的像素，如何去除"></a>Q.4 为什么inline-block的li之间有多余的像素，如何去除</h3><p>这个问题当面试官问出后，勾起我许多回忆，在一年多前，我发现自己不论如何设置li的css属性，他们之间总是有间隔，后来我删除掉了li间的所有字符才解决的，当时觉得莫名奇妙。一切诡异的现象都有其合理的解释。</p>
+<p>问题代码如下：</p>
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;&lt;/title&gt;
+    &lt;style type=&quot;text/css&quot;&gt;
+        li{
+            display: inline-block;
+            width: 100px;
+            margin: 0px;
+            padding: 0px;
+            background-color: green;
+        }
+    &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;ul&gt;
+        &lt;li&gt;1&lt;/li&gt;
+        &lt;li&gt;2&lt;/li&gt;
+        &lt;li&gt;3&lt;/li&gt;
+        &lt;li&gt;4&lt;/li&gt;
+        &lt;li&gt;5&lt;/li&gt;
+    &lt;/ul&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre><p>出现间隔的原因，因为li的display设置为inline-block,可以将li看作文字元素类似于span，span本身就是行内你元素，li标签之间存在一个换行字符，因此出现了空白。</p>
+<p>解方法：CSS-TRICKS有一篇文章<a href="https://css-tricks.com/fighting-the-space-between-inline-block-elements/" target="_blank" rel="external">fighting-the-space-between-inline-block-elements</a></p>
+<p>解决方法很巧妙，然而一切都应基于了解原理的前提下才能想出这些有趣的方法。</p>
+<blockquote>
+<p>这个问题本身的价值或许不大，但让我突然意识到联系前后知识，以及对出现特殊状况应当保持足够用的敏感，也许就能从问题当中有所收获。</p>
+</blockquote>
+<p>一面的问题就写到这里吧，如果还想起什么特别的再补充。</p>
+<h2 id="二面"><a href="#二面" class="headerlink" title="二面"></a>二面</h2><p>二面主要侧重于项目，先是问了问学习的经历，然后根据简历上的项目进行提问。<br>有趣的跟面试官提起我写的小游戏<a href="https://github.com/inkinworld/Tank" target="_blank" rel="external">坦克大战</a>之前心血来潮，觉得很有趣就做的。并且提起了想最终实现联机功能。<br>这个项目模块化方面做的很原始，还是有些心虚的。</p>
+<p>面试官就做过类似的项目，有幸得到关于项目细节的指点。</p>
+<ol>
+<li><p>使用HTML5制作，视觉效果的问题大部分都能解决，但音乐效果是个大坑，HTML5的音乐API功能比较简陋，无法实现音轨的叠加，不能同时播放。（我自己之前只简单的添加了音效，当时觉得有些嘈杂，也没有详细去做，今后尝试下）</p>
+</li>
+<li><p>联机，联机将指令分为两类，操作指令和绘图指令，这样才能保障在丢包的情况下，始终保持每个客户端的状态一至。（天了噜，这个我在设计之初就想错了，计划只用操作指令同步的，因此绘图的接口没有预留，如果想要实现联机功能，估计要做大的改动）</p>
+</li>
+<li><p>绘制周期不一定要调用RAF，通过对游戏数据的计算，可以得到合适的刷新周期，这样能使帧数更稳定，体验更好。（这个问题比较复杂了。。）</p>
+</li>
+</ol>
+<p>问了关于自适应网站开发的项目，我就提了这个网站，但面试官打开的时候，布局出现了问题，我很方啊。。回学校路上赶忙试了试，发现是正常，有些郁闷。</p>
+<p>之后还问了些关于爬虫的问题。复杂度有限，也没什么讲的。</p>
+<h2 id="三面"><a href="#三面" class="headerlink" title="三面"></a>三面</h2><p>也就是hr面，主要就是性格问题，项目扮演角色，职业规划，就职城市之类的。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><blockquote>
+<p>加强基础知识，不然面试官引导回答问题都答不上来就尴尬了。T.T<br>自己做的实践不能马虎，越是注意细节越是有收获。</p>
+</blockquote>
+
+		</article>
+	</div>	
+	<div class="toc-button"></div>
+
+<script type="text/javascript">
+function create_toc(){
+	var toc = [];
+	var article = document.querySelector('article');
+	if(article){
+		var list = article.querySelectorAll('*');
+		for(var j= i = 0; i < list.length;i++){
+			if(list[i].tagName == 'H3' || list[i].tagName == 'H2'){
+				list[i].id = 'toc' + j++;
+				toc.push(list[i])
+			}
+		}
+
+		var ul = document.createElement('ul');
+		var div_box = document.createElement('div');
+		ul.appendChild(div_box);
+		ul.id = "toc";
+		var ul2;
+		var is_first_h3 = true;
+		toc.forEach(function(e,i){
+			if(e.tagName == 'H2'){
+				is_first_h3 = true;
+				var h2 = document.createElement('li');
+				h2.innerText = e.innerText;
+				h2.tar = '#toc' + i;
+				ul.appendChild(h2);
+			}else{
+				if(is_first_h3){
+					is_first_h3 = false;
+					ul2 = document.createElement('ul');
+					ul.appendChild(ul2);
+				}
+				var h3 = document.createElement('li');
+				h3.innerText = e.innerText;
+				h3.tar = '#toc' + i;
+				ul2.appendChild(h3);
+			}
+		})
+
+		var parent_ele = document.querySelector('body');	
+		parent_ele.appendChild(ul);
+
+	}
+}
+
+create_toc();
+//委托toc事件
+var body = document.querySelector('body');
+var toc = document.querySelector('#toc');
+toc.addEventListener('click',function(evt){
+	var target = evt.target;
+	if(target.tagName == 'LI'){
+		body.scrollTop = 1000;
+		var move = document.querySelector(target.tar).offsetTop;
+		body.scrollTop = move - 120;
+	}
+})
+//为toc绑定按钮
+var toc_button = document.querySelector('.toc-button')
+toc_button.addEventListener('click',function(evt){
+	evt.target.classList.toggle('open');
+	toc.classList.toggle('open');
+})
+
+</script>
+	 
+
+<!-- DISQUS -->
+
+</div>
+</article>
+<div class="footer">
+      &copy; 2016 Hnahui
+      powered_by <a href="http://hexo.io/" target="_blank">Hexo</a>
+       <a href="https://github.com/inkinworld/Hexo-theme-Han" target="_blank">Theme from Han</a>
+       <span id="busuanzi_container_site_pv">本站总访问量<span id="busuanzi_value_site_pv"></span>次</span>
+</div>
+</body>
+</html>
+<script type="text/javascript">
+	var list_button = document.querySelector('.list-button');
+	var nav_button = document.querySelector('.nav-button')
+	var list = document.querySelector('.index-list');
+	var header = document.querySelector('header');
+	var nav = document.querySelector('.index-nav');
+	var blog_name = document.querySelector('.blog-name')
+
+	list_button.addEventListener('click',function(evt){
+		evt.target.classList.toggle('open')
+		list.classList.toggle('open')
+		header.classList.toggle('open')
+	},true)
+
+	nav_button.addEventListener('click',function(evt){
+		evt.target.classList.toggle('open1');
+		header.classList.toggle('open1');
+		list_button.classList.toggle('open1');
+		blog_name.classList.toggle('open1');
+	})
+</script>

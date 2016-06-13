@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+ 
+ <meta name="description" content="如何制作属于自己的Hexo主题">
+ 
+
+ 
+ 
+ <meta name="keywords" content="Hexo,主题制作,教程">
+ 
+  
+  <title>Hexo主题制作（一） | Hanhui&#39;s Blog</title>
+  
+  <script src="/javascripts/highlight.js"></script>
+  <link rel="stylesheet" href="/stylesheets/index.css">
+  <link rel="stylesheet" href="/stylesheets/github-markdown.css">
+  <link rel="stylesheet" href="/stylesheets/tomorrow.css">
+	<script>hljs.initHighlightingOnLoad();</script>
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+</head>
+<body>
+
+<header class="index-header">
+	<div class="header-box">
+		<button class="list-button">三</button>
+		<h1 class="blog-name"><a href="/">Hanhui's Blog</a></h1>
+		<button class="nav-button"><</button>
+		<div class="index-nav">
+			<ul>
+			  
+			    <li><a href="/">Home</a></li>
+			  
+			    <li><a href="/archives">Archives</a></li>
+			  
+			    <li><a href="https://github.com/inkinworld">Github</a></li>
+			  
+			</ul>	
+		</div>
+	</div>
+</header>
+
+	<div class="index-list">
+
+	<ul class="head-icon">
+		<li id="index-tip">
+			<img src="/images/head.jpg"><br>
+			<span></span>
+			<p></p>
+		</li>
+		
+			<li style="height:auto;padding:0px">
+				<ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/库/">库</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/教程/">教程</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/笔记/">笔记</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/经历/">经历</a><span class="category-list-count">1</span></li></ul>
+			</li>
+			<li style="height:auto;padding:0px">
+				<ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Chai/">Chai</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/">Hexo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Node/">Node</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Promise/">Promise</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javascript/">javascript</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/主题制作/">主题制作</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/总结/">总结</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/教程/">教程</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/测试/">测试</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/理解/">理解</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/面试/">面试</a><span class="tag-list-count">1</span></li></ul>
+			</li>
+		
+	</ul>	
+</div>
+	<div class="container">
+	<div class="post-articles">
+		<div class="article-info">
+			<h1 class="article-title">Hexo主题制作（一）</h1>
+			
+				
+	<a class="article-tag" href="/tags/Hexo/">Hexo</a>
+
+	<a class="article-tag" href="/tags/主题制作/">主题制作</a>
+
+	<a class="article-tag" href="/tags/教程/">教程</a>
+	
+			
+			<span class="article-time">2016-05-07</span>
+		</div>		
+		<article class="markdown-body markdown shadow-set">
+			<p>1.第一篇主要介绍Hexo静态文件的生成逻辑<br>2.第二篇介绍博客系统页面的功能分割方式，如何更好的利用模板</p>
+<a id="more"></a> 
+<blockquote>
+<p>想必大家都尝试过多款Hexo的主题，也有尝试制作一款属于自己的主题的想法，但Hexo提供的文档有些简略，我在折腾了两天后总结了一些心得同大家分享一下。<br>已经有许多Hexo配置的教程了，略过配置与安装，我们直接开始主题制作吧！<br><strong>发现这篇文章越写越啰嗦，主要是想展示Hexo的渲染逻辑，搞清这些，<a href="https://hexo.io/zh-cn/docs/" target="_blank" rel="external">官方文档</a>的意思也就变得清晰了</strong></p>
+</blockquote>
+<h2 id="开始前的准备"><a href="#开始前的准备" class="headerlink" title="开始前的准备"></a>开始前的准备</h2><p>你可以先阅读这篇文章<a href="http://www.codeblocq.com/2016/03/Create-an-Hexo-Theme-Part-1-Index/" target="_blank" rel="external">CREATE AN HEXO THEME</a>，它详细介绍了一个Hexo主题基础功能的搭建过程。我对这片文章没有涉及的部分做了一些补充。</p>
+<h3 id="Hexo会渲染哪些页面？"><a href="#Hexo会渲染哪些页面？" class="headerlink" title="Hexo会渲染哪些页面？"></a>Hexo会渲染哪些页面？</h3><p><strong>为了直观了解Hexo都渲染了哪些页面我故意生成了几篇文章</strong></p>
+<pre><code>hexo new test1
+hexo new test2
+hexo new test3
+</code></pre><p>打开./source/_posts里面会生成对应的3个.md文件<br></p>
+<p>分别编辑如下:</p>
+<p>test1.md</p>
+<pre><code>---
+title: test1
+date: 2016-02-08 16:31:16
+tags: 
+    - tag1
+    - tag2
+categories:
+    - category1
+description: 如何制作属于自己的Hexo主题
+---
+context1
+</code></pre><p>test2.md</p>
+<pre><code>---
+title: test2
+date: 2016-03-08 16:31:16
+tags: 
+    - tag1
+    - tag2
+    - tag3
+categories:
+    - category2
+description: 如何制作属于自己的Hexo主题
+---
+context2
+</code></pre><p>test3.md</p>
+<pre><code>---
+title: test3
+date: 2016-04-08 16:31:16
+tags: 
+    - tag2
+    - tag3
+    - tag4
+categories:
+    - category3
+description: 如何制作属于自己的Hexo主题
+---
+context3
+</code></pre><p>使用生成命令</p>
+<pre><code>hexo g
+</code></pre><blockquote>
+<p><strong>Hexo是静态文件博客系统，因此生成文件的结构即访问时url的路径</strong><br>在此省略了CSS,js等于资源文件的结构</p>
+</blockquote>
+<p>打开./public该文件夹存放着生成的静态博客的全部文件<br>生成如下文件结构:</p>
+<pre><code>│  index.html
+│
+├─2016    &lt;----默认情况下Hexo为每篇文章以日期形式生成目录，每篇文章有一个对应路径,需要post模板
+│  ├─02
+│  │  └─08
+│  │      └─test1
+│  │              index.html
+│  │
+│  ├─03
+│  │  └─08
+│  │      └─test2
+│  │              index.html
+│  │
+│  └─05
+│      └─08
+│          ├─hello-world
+│          │      index.html
+│          │
+│          └─test3
+│                  index.html
+│
+├─archives        &lt;----档案，用来将博客按照时间顺序归类，该文件夹内所有页面用acrhcives.ejs模板渲染    
+│  │  index.html
+│  │
+│  └─2016
+│      │  index.html
+│      │
+│      ├─02
+│      │      index.html
+│      │
+│      ├─03
+│      │      index.html
+│      │
+│      └─05
+│              index.html
+│
+├─categories        &lt;----分类，按照上述博客文件里，为每篇文章设置的类别分类
+│  ├─category1
+│  │      index.html
+│  │
+│  └─category2
+│          index.html
+│
+└─tags        &lt;----标签，按照文章中设置的标签分类
+    ├─tag1
+    │      index.html
+    │
+    ├─tag2
+    │      index.html
+    │
+    └─tag3
+            index.html
+</code></pre><p>可以发现主题需要以下几个关键的模板</p>
+<table>
+<thead>
+<tr>
+<th>模板</th>
+<th>用途</th>
+<th>回调</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>index</td>
+<td>首页</td>
+<td></td>
+</tr>
+<tr>
+<td>post</td>
+<td>文章</td>
+<td>index</td>
+</tr>
+<tr>
+<td>page</td>
+<td>分页</td>
+<td>index</td>
+</tr>
+<tr>
+<td>archive</td>
+<td>归档</td>
+<td>index</td>
+</tr>
+<tr>
+<td>category</td>
+<td>分类归档</td>
+<td>archive</td>
+</tr>
+<tr>
+<td>tag</td>
+<td>标签归档</td>
+<td>archive</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>回调机制在后面的内容中会详细说明</p>
+</blockquote>
+<p>Hexo生成相应页面时会根据主题文件中对应的模板应用当前页面中所对应的变量进行渲染</p>
+<h3 id="Ejs模板"><a href="#Ejs模板" class="headerlink" title="Ejs模板"></a>Ejs模板</h3><p>  我选择使用Ejs作为模板来制作主题，Ejs的语法很简单，代码的复用是高效开发的关键</p>
+<h3 id="Hexo为模板渲染提供数据"><a href="#Hexo为模板渲染提供数据" class="headerlink" title="Hexo为模板渲染提供数据"></a>Hexo为模板渲染提供数据</h3><p>   抛开前端开发的问题，开发主题的核心是搞清楚如何获得需要所需的变量，Hexo为此提供了可在模板中直接引用的<a href="https://hexo.io/zh-cn/docs/variables.html" target="_blank" rel="external">变量</a>。<br>   我打算将每个页面能引用的变量都展示出来。</p>
+<h2 id="开始！"><a href="#开始！" class="headerlink" title="开始！"></a>开始！</h2><h3 id="Theme目录"><a href="#Theme目录" class="headerlink" title="Theme目录"></a>Theme目录</h3><p>在themes文件夹内新建一个名为Theme的新主题,结构如下。将Hexo配置文件内的主题名改为Theme，启动Hexo的server或开发模式。</p>
+<pre><code>Theme
+│  _config.yml         &lt;----主题配置文件，可以设置全局变量theme
+│
+├─layout
+│  │  index.ejs        &lt;----首页模板
+│  │  layout.ejs       &lt;----基础模板，默认所有页面的模板都由此开始
+│  │
+│  └─_partial          &lt;----存放各模板组件
+│          footer.js
+│          head.js
+│          header.js
+│
+├─script
+└─source              &lt;----资源文件夹
+    ├─css
+    │      theme.css
+    │
+    ├─images
+    └─javascript
+            theme.js
+</code></pre><h2 id="使用lyaout布局"><a href="#使用lyaout布局" class="headerlink" title="使用lyaout布局"></a>使用lyaout布局</h2><p>博客的逻辑比较简单，通常各个页面使用固定的head和footer因此Hexo在渲染页面时提供了layout布局<br>layout.ejs提供布局模板，每个渲染页面的入口都是改模板。<br>先定义head.ejs</p>
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;meta charset=&quot;utf-8&quot;&gt; 
+    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;&gt;
+    &lt;%- css(&quot;css/theme&quot;) %&gt;
+    &lt;%- js(&quot;js/theme&quot;) %&gt;
+&lt;/head&gt;
+&lt;body&gt;
+</code></pre><blockquote>
+<p>其中<strong>css()</strong>,<strong>js()</strong><br>是Hexo提供的<a href="https://hexo.io/zh-cn/docs/helpers.html" target="_blank" rel="external">辅助函数</a><br>用来插入css和js，默认直接以source为根目录获取资源</p>
+</blockquote>
+<p>footer.ejs内容如下</p>
+<pre><code>&lt;div&gt;
+    &lt;h2&gt;I am footer&lt;/h2&gt;
+&lt;/div&gt;
+&lt;/body&gt;
+</code></pre><p>layout.ejs内容如下</p>
+<pre><code>&lt;%- partial(&apos;_partial/head&apos;)%&gt;
+    &lt;%- body %&gt;
+&lt;%- partial(&apos;_partial/footer&apos;)%&gt;
+</code></pre><blockquote>
+<p><strong>partial()</strong>函数是引用模板函数，你可以为引用的模板传递参数如<br>partial(‘_partial/head’,{isAddCss:true})<br><strong>&lt;%- body %&gt;</strong>变量会<strong>自动</strong>引用当前生成页面对应的模板<br>例如生成博客主页index.html时，Hexo通过layout.ejs,将&lt;%- body %&gt;定义为index.ejs来生成内容<br>相当于&lt;%- partial(‘index.ejs’) %&gt;</p>
+</blockquote>
+<p>接下来编辑index.ejs</p>
+<pre><code>&lt;h1&gt;I am index&lt;/h1&gt;
+</code></pre><p>好的，至此，Hexo已经可以生成index.html文件</p>
+<pre><code>hexo server -p 3000
+</code></pre><p>在浏览器里访问127.0.0.1:3000<br>就能看到生成的index.html页面。</p>
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;head&gt;
+    &lt;meta charset=&quot;utf-8&quot;&gt; 
+    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;&gt;
+    &lt;link rel=&quot;stylesheet&quot; href=&quot;/css/theme.css&quot;&gt;
+    &lt;script src=&quot;/js/theme.js&quot;&gt;&lt;/script&gt;
+&lt;/head&gt;
+&lt;body&gt;    
+    &lt;h1&gt;I am index&lt;/h1&gt;
+    &lt;div&gt;
+        &lt;h2&gt;I am footer&lt;/h2&gt;
+    &lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre><p>通过模板的引用，可以非常便捷的复用各个模块，因此规划好博客的功能，<br>设计适当的模块能大大提高主题开发的效率和可维护性</p>
+<h3 id="使用变量"><a href="#使用变量" class="headerlink" title="使用变量"></a>使用变量</h3><p>正如之前提到的通过内置的<a href="https://hexo.io/zh-cn/docs/variables.html" target="_blank" rel="external">变量</a>对模板进行渲染，生成文件，接下来举例说明各个全局变量的设置和引用方式</p>
+<blockquote>
+<p>在不同的页面中，<strong>相同名称的变量对应的值</strong>却是<strong>不同的</strong><br>例如： index.html中的page.title与./archives/index.html的page.title不同，分别有着各自的页面信息</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>变量</th>
+<th>描述</th>
+<th>配置方式</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>site</td>
+<td>网站变量</td>
+<td>默认无法设置</td>
+</tr>
+<tr>
+<td>page</td>
+<td>针对该页面的内容以及 front-matter 所设定的变量。</td>
+<td>可以在.md文章中设置，如tags</td>
+</tr>
+<tr>
+<td>config</td>
+<td>网站配置</td>
+<td>在Hexo配置文件。./_config.yml中设置</td>
+</tr>
+<tr>
+<td>theme</td>
+<td>主题配置。继承自网站配置。</td>
+<td>在主题配置文件中设置./themes/test/_config.yml</td>
+</tr>
+<tr>
+<td>_ (单下划线)</td>
+<td>Lodash 函数库</td>
+<td></td>
+</tr>
+<tr>
+<td>path</td>
+<td>当前页面的路径（不含根路径）</td>
+<td>默认</td>
+</tr>
+<tr>
+<td>url</td>
+<td>当前页面的完整网址</td>
+<td>默认</td>
+</tr>
+<tr>
+<td>env</td>
+<td>环境变量</td>
+<td>默认</td>
+</tr>
+</tbody>
+</table>
+<p>如官方文档所列的各个属性都能在页面中直接使用</p>
+<h4 id="举例config变量的使用"><a href="#举例config变量的使用" class="headerlink" title="举例config变量的使用"></a>举例config变量的使用</h4><p>在./config.yml中添加：</p>
+<pre><code>menu:
+  Home: /
+  Archives: /archives
+  Github: https://github.com/inkinworld
+</code></pre><p>在./layout/_partial/header.ejs添加</p>
+<pre><code>&lt;ul&gt;
+  &lt;% for (var i in theme.menu){ %&gt;
+    &lt;li&gt;&lt;a href=&quot;&lt;%- url_for(theme.menu[i]) %&gt;&quot;&gt;&lt;%= i %&gt;&lt;/a&gt;&lt;/li&gt;
+  &lt;% } %&gt;
+&lt;/ul&gt;
+</code></pre><p>通过theme变量的menu属性获得设置的内容</p>
+<blockquote>
+<p><strong>&lt;%- url_for() %&gt;</strong>也是<a href="https://hexo.io/zh-cn/docs/helpers.html" target="_blank" rel="external">辅助函数</a>的一种<br>用来生成相对根目录的url</p>
+</blockquote>
+<p>重启hexo server刷新页面，index.html输出：</p>
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;head&gt;
+&lt;meta charset=&quot;utf-8&quot;&gt; 
+&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;&gt;
+&lt;link rel=&quot;stylesheet&quot; href=&quot;/css/theme.css&quot;&gt;
+&lt;script src=&quot;/js/theme.js&quot;&gt;&lt;/script&gt;
+&lt;/head&gt;
+&lt;body&gt;
+
+&lt;ul&gt;
+    &lt;li&gt;&lt;a href=&quot;/&quot;&gt;Home&lt;/a&gt;&lt;/li&gt;
+
+    &lt;li&gt;&lt;a href=&quot;/archives&quot;&gt;Archives&lt;/a&gt;&lt;/li&gt;
+
+    &lt;li&gt;&lt;a href=&quot;https://github.com/inkinworld&quot;&gt;Github&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;    
+
+&lt;h1&gt;I am index&lt;/h1&gt;
+&lt;div&gt;
+    &lt;h2&gt;I am footer&lt;/h2&gt;
+&lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre><blockquote>
+<p>theme变量的使用相同，只是配置的位置不同<br>可以通过编辑配置文件设置需要的字符对象，也可以配置一些逻辑变量<br>用来判断是否开启部分功能、插件、甚至决定标签的class属性</p>
+</blockquote>
+<h3 id="theme变量的使用"><a href="#theme变量的使用" class="headerlink" title="theme变量的使用"></a>theme变量的使用</h3><p>编辑./source/css/theme.css</p>
+<pre><code>.blue{
+    color: blue;
+}
+
+.red{
+    color: red;
+}
+</code></pre><p>编辑./layout/index.ejs</p>
+<pre><code>&lt;h1 class=&quot;&lt;%- theme.colorClass %&gt;&quot;&gt;I am index&lt;/h1&gt;
+</code></pre><p>编辑test/_config.yml(主题配置文件)</p>
+<pre><code>colorClass: red
+</code></pre><p>刷新页面，会发现红色的“I am index”<br>具体的使用可以根据实际需求设计，尽量简化逻辑，方便配置</p>
+<h2 id="关于链接"><a href="#关于链接" class="headerlink" title="关于链接"></a>关于链接</h2><p>由于是静态博客系统，文件结构对应着连接的url</p>
+<p>编辑index.ejs</p>
+<pre><code>&lt;h1 class=&quot;&lt;%- theme.colorClass %&gt;&quot;&gt;I am index&lt;/h1&gt;
+&lt;% page.posts.forEach(function(article,index){ %&gt;
+    &lt;div&gt;
+        //通过url_for函数配合posts对象的path属性生成文章的链接
+        &lt;h3&gt;&lt;a href=&quot;&lt;%- url_for(article.path) %&gt;&quot;&gt;&lt;%- index%&gt;.&lt;%- article.title %&gt;&lt;/a&gt;&lt;h3&gt;
+    &lt;/div&gt;
+&lt;% }) %&gt;
+</code></pre><p>刷新页面，生成如下index.html:</p>
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;head&gt;
+    &lt;meta charset=&quot;utf-8&quot;&gt; 
+    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;&gt;
+    &lt;link rel=&quot;stylesheet&quot; href=&quot;/css/theme.css&quot;&gt;
+    &lt;script src=&quot;/js/theme.js&quot;&gt;&lt;/script&gt;
+&lt;/head&gt;
+&lt;body&gt;    
+&lt;ul&gt;
+    &lt;li&gt;&lt;a href=&quot;/&quot;&gt;Home&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href=&quot;/archives&quot;&gt;Archives&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href=&quot;https://github.com/inkinworld&quot;&gt;Github&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 class=&quot;red&quot;&gt;I am index&lt;/h1&gt;
+
+//以下为page.posts变量遍历生成的内容
+&lt;div&gt;
+    &lt;h3&gt;&lt;a href=&quot;/2016/05/08/hello-world/&quot;&gt;0.Hello World&lt;/a&gt;&lt;h3&gt;
+&lt;/div&gt;
+
+&lt;div&gt;
+    &lt;h3&gt;&lt;a href=&quot;/2016/04/08/test3/&quot;&gt;1.test3&lt;/a&gt;&lt;h3&gt;
+&lt;/div&gt;
+
+&lt;div&gt;
+    &lt;h3&gt;&lt;a href=&quot;/2016/03/08/test2/&quot;&gt;2.test2&lt;/a&gt;&lt;h3&gt;
+&lt;/div&gt;
+
+&lt;div&gt;
+    &lt;h3&gt;&lt;a href=&quot;/2016/02/08/test1/&quot;&gt;3.test1&lt;/a&gt;&lt;h3&gt;
+&lt;/div&gt;
+
+&lt;div&gt;
+    &lt;h2&gt;I am footer&lt;/h2&gt;
+&lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre><h2 id="模板的回调"><a href="#模板的回调" class="headerlink" title="模板的回调"></a>模板的回调</h2><p>此时你可能已经点击了文章的标题，发现server并没有返回页面，<br>这是因为我们创造的的主题缺少post.ejs模板，Hexo无法生成对应的静态页面(按官方文档而言，是应当有内容的，但实际测试没有)<br>而点击header.ejs生成的Archives链接页面的url变为<a href="http://127.0.0.1:3000/archives/" target="_blank" rel="external">http://127.0.0.1:3000/archives/</a><br>但内容却没有发生改变，这是因为Hexo模板引用的<strong>回调</strong>机制</p>
+<blockquote>
+<p>当需要Archives模板，但主题中却不存在时，会使用index.ejs作为模板<br>尽管回调会使用相同的模板，但在渲染不同的页面时，<strong>相同名称的变量对应的值</strong>却是<strong>不同的</strong></p>
+</blockquote>
+<p>在/layout/中补上post.ejs，内容如下</p>
+<pre><code>&lt;h1&gt;&lt;%- page.title%&gt;&lt;/h1&gt;
+&lt;div&gt;&lt;%- page.content %&gt;&lt;/div&gt;
+</code></pre><p>再点击index.html中文章的标题，url改变为<a href="http://127.0.0.1:4000/2016/02/08/test1/" target="_blank" rel="external">http://127.0.0.1:4000/2016/02/08/test1/</a>    </p>
+<h2 id="告一段落"><a href="#告一段落" class="headerlink" title="告一段落"></a>告一段落</h2><p>写的拖沓，希望有所帮助，写累了，下期见。</p>
+
+		</article>
+	</div>	
+	<div class="toc-button"></div>
+
+<script type="text/javascript">
+function create_toc(){
+	var toc = [];
+	var article = document.querySelector('article');
+	if(article){
+		var list = article.querySelectorAll('*');
+		for(var j= i = 0; i < list.length;i++){
+			if(list[i].tagName == 'H3' || list[i].tagName == 'H2'){
+				list[i].id = 'toc' + j++;
+				toc.push(list[i])
+			}
+		}
+
+		var ul = document.createElement('ul');
+		var div_box = document.createElement('div');
+		ul.appendChild(div_box);
+		ul.id = "toc";
+		var ul2;
+		var is_first_h3 = true;
+		toc.forEach(function(e,i){
+			if(e.tagName == 'H2'){
+				is_first_h3 = true;
+				var h2 = document.createElement('li');
+				h2.innerText = e.innerText;
+				h2.tar = '#toc' + i;
+				ul.appendChild(h2);
+			}else{
+				if(is_first_h3){
+					is_first_h3 = false;
+					ul2 = document.createElement('ul');
+					ul.appendChild(ul2);
+				}
+				var h3 = document.createElement('li');
+				h3.innerText = e.innerText;
+				h3.tar = '#toc' + i;
+				ul2.appendChild(h3);
+			}
+		})
+
+		var parent_ele = document.querySelector('body');	
+		parent_ele.appendChild(ul);
+
+	}
+}
+
+create_toc();
+//委托toc事件
+var body = document.querySelector('body');
+var toc = document.querySelector('#toc');
+toc.addEventListener('click',function(evt){
+	var target = evt.target;
+	if(target.tagName == 'LI'){
+		body.scrollTop = 1000;
+		var move = document.querySelector(target.tar).offsetTop;
+		body.scrollTop = move - 120;
+	}
+})
+//为toc绑定按钮
+var toc_button = document.querySelector('.toc-button')
+toc_button.addEventListener('click',function(evt){
+	evt.target.classList.toggle('open');
+	toc.classList.toggle('open');
+})
+
+</script>
+	 
+
+<!-- DISQUS -->
+
+</div>
+</article>
+<div class="footer">
+      &copy; 2016 Hnahui
+      powered_by <a href="http://hexo.io/" target="_blank">Hexo</a>
+       <a href="https://github.com/inkinworld/Hexo-theme-Han" target="_blank">Theme from Han</a>
+       <span id="busuanzi_container_site_pv">本站总访问量<span id="busuanzi_value_site_pv"></span>次</span>
+</div>
+</body>
+</html>
+<script type="text/javascript">
+	var list_button = document.querySelector('.list-button');
+	var nav_button = document.querySelector('.nav-button')
+	var list = document.querySelector('.index-list');
+	var header = document.querySelector('header');
+	var nav = document.querySelector('.index-nav');
+	var blog_name = document.querySelector('.blog-name')
+
+	list_button.addEventListener('click',function(evt){
+		evt.target.classList.toggle('open')
+		list.classList.toggle('open')
+		header.classList.toggle('open')
+	},true)
+
+	nav_button.addEventListener('click',function(evt){
+		evt.target.classList.toggle('open1');
+		header.classList.toggle('open1');
+		list_button.classList.toggle('open1');
+		blog_name.classList.toggle('open1');
+	})
+</script>

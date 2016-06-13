@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+ 
+ <meta name="description" content="关于Chai的介绍，以及使用。">
+ 
+
+ 
+ 
+ <meta name="keywords" content="Chai,Node,测试">
+ 
+  
+  <title>Chai优雅有趣的断言库 | Hanhui&#39;s Blog</title>
+  
+  <script src="/javascripts/highlight.js"></script>
+  <link rel="stylesheet" href="/stylesheets/index.css">
+  <link rel="stylesheet" href="/stylesheets/github-markdown.css">
+  <link rel="stylesheet" href="/stylesheets/tomorrow.css">
+	<script>hljs.initHighlightingOnLoad();</script>
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+</head>
+<body>
+
+<header class="index-header">
+	<div class="header-box">
+		<button class="list-button">三</button>
+		<h1 class="blog-name"><a href="/">Hanhui's Blog</a></h1>
+		<button class="nav-button"><</button>
+		<div class="index-nav">
+			<ul>
+			  
+			    <li><a href="/">Home</a></li>
+			  
+			    <li><a href="/archives">Archives</a></li>
+			  
+			    <li><a href="https://github.com/inkinworld">Github</a></li>
+			  
+			</ul>	
+		</div>
+	</div>
+</header>
+
+	<div class="index-list">
+
+	<ul class="head-icon">
+		<li id="index-tip">
+			<img src="/images/head.jpg"><br>
+			<span></span>
+			<p></p>
+		</li>
+		
+			<li style="height:auto;padding:0px">
+				<ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/库/">库</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/教程/">教程</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/笔记/">笔记</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/经历/">经历</a><span class="category-list-count">1</span></li></ul>
+			</li>
+			<li style="height:auto;padding:0px">
+				<ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Chai/">Chai</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/">Hexo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Node/">Node</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Promise/">Promise</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javascript/">javascript</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/主题制作/">主题制作</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/总结/">总结</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/教程/">教程</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/测试/">测试</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/理解/">理解</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/面试/">面试</a><span class="tag-list-count">1</span></li></ul>
+			</li>
+		
+	</ul>	
+</div>
+	<div class="container">
+	<div class="post-articles">
+		<div class="article-info">
+			<h1 class="article-title">Chai优雅有趣的断言库</h1>
+			
+				
+	<a class="article-tag" href="/tags/Chai/">Chai</a>
+
+	<a class="article-tag" href="/tags/Node/">Node</a>
+
+	<a class="article-tag" href="/tags/测试/">测试</a>
+	
+			
+			<span class="article-time">2016-05-09</span>
+		</div>		
+		<article class="markdown-body markdown shadow-set">
+			<blockquote>
+<p>了解一个项目的最佳方式是官方文档<br>这篇文章仅作记录</p>
+</blockquote>
+<a id="more"></a> 
+<p>刚看到这个库的名字不由和“茶”联系起来，看到首页Demo中的语法觉得更欢乐了。</p>
+<h2 id="关于Assert"><a href="#关于Assert" class="headerlink" title="关于Assert"></a>关于Assert</h2><p>在Node中有等级为</p>
+<pre><code>Stability: 3 - Locked
+</code></pre><p>的Assert模块，该模块主要供Node本身使用</p>
+<blockquote>
+<p>Chai是为开发测试使用的断言库</p>
+</blockquote>
+<h2 id="Chai"><a href="#Chai" class="headerlink" title="Chai"></a>Chai</h2><h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><pre><code>$ npm install chai
+</code></pre><h3 id="BDD-vs-TDD"><a href="#BDD-vs-TDD" class="headerlink" title="BDD vs TDD"></a>BDD vs TDD</h3><p>Chai提供两种类型的断言风格：<strong>TDD</strong>（测试驱动开发）和<strong>BDD</strong>（行为驱动）<br>可以通过这篇<a href="http://joshldavis.com/2013/05/27/difference-between-tdd-and-bdd/" target="_blank" rel="external">文章</a>快速了解两种测试风格的区别</p>
+<blockquote>
+<p>我的理解是BDD的风格更接近<strong>自然语言</strong>，使得写测试程序时思路更符合直觉<br>TDD像是严格的数学公式，是一种严格的<strong>逻辑形式</strong><br>以上纯属一家之言</p>
+</blockquote>
+<h3 id="BDD"><a href="#BDD" class="headerlink" title="BDD"></a>BDD</h3><p>从Chai提供的BDD方法可以很直观的感受到自然语言的形式<br>与BDD对应的是Should和Expect方法</p>
+<h4 id="Should-vs-Expect"><a href="#Should-vs-Expect" class="headerlink" title="Should vs Expect"></a>Should vs Expect</h4><p>二者在实现方式上不同，见注释</p>
+<pre><code>Should:
+
+chai.should();
+
+//Object对象的原型对象被修改，拥有了should方法。因此foo可以使用should
+foo.should.be.a(&apos;string&apos;);
+foo.should.equal(&apos;bar&apos;);
+foo.should.have.length(3);
+tea.should.have.property(&apos;flavors&apos;)
+  .with.length(3);
+
+
+Expect:
+
+var expect = chai.expect;
+//并未修改Object对象，通过except构造函数使得foo具有断言方法
+expect(foo).to.be.a(&apos;string&apos;);
+expect(foo).to.equal(&apos;bar&apos;);
+expect(foo).to.have.length(3);
+expect(tea).to.have.property(&apos;flavors&apos;)
+  .with.length(3);
+
+//使用方法也不同
+var chai = require(&apos;chai&apos;);
+//只需引用
+var expect = chai.expect;
+      //引用后执行对Object对象原型进行修改
+var should = chai.should();
+</code></pre><p>except适用于Node和所有浏览器，should适用于Node和现代浏览器</p>
+<h3 id="TDD"><a href="#TDD" class="headerlink" title="TDD"></a>TDD</h3><p>TDD同Node的Assert同一风格，拓展了更多的功能</p>
+<pre><code>var assert = chai.assert;
+
+assert.typeOf(foo, &apos;string&apos;);
+assert.equal(foo, &apos;bar&apos;);
+assert.lengthOf(foo, 3)
+assert.property(tea, &apos;flavors&apos;);
+assert.lengthOf(tea.flavors, 3);
+</code></pre><h2 id="有趣的BDD风格"><a href="#有趣的BDD风格" class="headerlink" title="有趣的BDD风格"></a>有趣的BDD风格</h2><p>except to do something<br>should have …<br>非常自然的感觉啊<br>根据<a href="http://chaijs.com/api/bdd/" target="_blank" rel="external">BDD文档</a>很快就能掌握断言语句的构造</p>
+<h2 id="下期预告，Mocha-amp-Chai，通过测试框架进行测试"><a href="#下期预告，Mocha-amp-Chai，通过测试框架进行测试" class="headerlink" title="下期预告，Mocha&amp;Chai，通过测试框架进行测试"></a>下期预告，Mocha&amp;Chai，通过测试框架进行测试</h2><blockquote>
+<p>写这篇文章的初衷是面试被问到关于单元测试的问题，完全答不上来<br>平时写代码完全人肉测试，为了成为独当一面的程序员。。。<br>从今往后。。尽量写吧..冏</p>
+</blockquote>
+
+		</article>
+	</div>	
+	<div class="toc-button"></div>
+
+<script type="text/javascript">
+function create_toc(){
+	var toc = [];
+	var article = document.querySelector('article');
+	if(article){
+		var list = article.querySelectorAll('*');
+		for(var j= i = 0; i < list.length;i++){
+			if(list[i].tagName == 'H3' || list[i].tagName == 'H2'){
+				list[i].id = 'toc' + j++;
+				toc.push(list[i])
+			}
+		}
+
+		var ul = document.createElement('ul');
+		var div_box = document.createElement('div');
+		ul.appendChild(div_box);
+		ul.id = "toc";
+		var ul2;
+		var is_first_h3 = true;
+		toc.forEach(function(e,i){
+			if(e.tagName == 'H2'){
+				is_first_h3 = true;
+				var h2 = document.createElement('li');
+				h2.innerText = e.innerText;
+				h2.tar = '#toc' + i;
+				ul.appendChild(h2);
+			}else{
+				if(is_first_h3){
+					is_first_h3 = false;
+					ul2 = document.createElement('ul');
+					ul.appendChild(ul2);
+				}
+				var h3 = document.createElement('li');
+				h3.innerText = e.innerText;
+				h3.tar = '#toc' + i;
+				ul2.appendChild(h3);
+			}
+		})
+
+		var parent_ele = document.querySelector('body');	
+		parent_ele.appendChild(ul);
+
+	}
+}
+
+create_toc();
+//委托toc事件
+var body = document.querySelector('body');
+var toc = document.querySelector('#toc');
+toc.addEventListener('click',function(evt){
+	var target = evt.target;
+	if(target.tagName == 'LI'){
+		body.scrollTop = 1000;
+		var move = document.querySelector(target.tar).offsetTop;
+		body.scrollTop = move - 120;
+	}
+})
+//为toc绑定按钮
+var toc_button = document.querySelector('.toc-button')
+toc_button.addEventListener('click',function(evt){
+	evt.target.classList.toggle('open');
+	toc.classList.toggle('open');
+})
+
+</script>
+	 
+
+<!-- DISQUS -->
+
+</div>
+</article>
+<div class="footer">
+      &copy; 2016 Hnahui
+      powered_by <a href="http://hexo.io/" target="_blank">Hexo</a>
+       <a href="https://github.com/inkinworld/Hexo-theme-Han" target="_blank">Theme from Han</a>
+       <span id="busuanzi_container_site_pv">本站总访问量<span id="busuanzi_value_site_pv"></span>次</span>
+</div>
+</body>
+</html>
+<script type="text/javascript">
+	var list_button = document.querySelector('.list-button');
+	var nav_button = document.querySelector('.nav-button')
+	var list = document.querySelector('.index-list');
+	var header = document.querySelector('header');
+	var nav = document.querySelector('.index-nav');
+	var blog_name = document.querySelector('.blog-name')
+
+	list_button.addEventListener('click',function(evt){
+		evt.target.classList.toggle('open')
+		list.classList.toggle('open')
+		header.classList.toggle('open')
+	},true)
+
+	nav_button.addEventListener('click',function(evt){
+		evt.target.classList.toggle('open1');
+		header.classList.toggle('open1');
+		list_button.classList.toggle('open1');
+		blog_name.classList.toggle('open1');
+	})
+</script>
