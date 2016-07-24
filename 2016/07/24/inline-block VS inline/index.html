@@ -4,15 +4,15 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1"></meta>
  
- <meta name="description" content="关于Chai的介绍，以及使用。">
+ <meta name="description" content="display属性inlne和inline-block的区别">
  
 
  
  
- <meta name="keywords" content="Chai,Node,测试">
+ <meta name="keywords" content="CSS">
  
   
-  <title>Chai优雅有趣的断言库 | Hanhui&#39;s Blog</title>
+  <title>inline-block VS inline | Hanhui&#39;s Blog</title>
   
   <script src="/javascripts/highlight.js"></script>
   <link rel="stylesheet" href="/stylesheets/index.css">
@@ -63,78 +63,120 @@
 	<div class="container">
 	<div class="post-articles">
 		<div class="article-info">
-			<h1 class="article-title">Chai优雅有趣的断言库</h1>
+			<h1 class="article-title">inline-block VS inline</h1>
 			
 				
-	<a class="article-tag" href="/tags/Chai/">Chai</a>
-
-	<a class="article-tag" href="/tags/Node/">Node</a>
-
-	<a class="article-tag" href="/tags/测试/">测试</a>
+	<a class="article-tag" href="/tags/CSS/">CSS</a>
 	
 			
-			<span class="article-time">2016-05-09</span>
+			<span class="article-time">2016-07-24</span>
 		</div>		
 		<article class="markdown-body markdown shadow-set">
 			<blockquote>
-<p>了解一个项目的最佳方式是官方文档<br>这篇文章仅作记录</p>
+<p>博客断更已久，前阵子在期末考，没敢太过自在<br>考完试就开始实习啦，日常要做项目，没太多时间写东西，借周末写一点</p>
 </blockquote>
 <a id="more"></a> 
-<p>刚看到这个库的名字不由和“茶”联系起来，看到首页Demo中的语法觉得更欢乐了。</p>
-<h2 id="关于Assert"><a href="#关于Assert" class="headerlink" title="关于Assert"></a>关于Assert</h2><p>在Node中有等级为</p>
-<pre><code>Stability: 3 - Locked
-</code></pre><p>的Assert模块，该模块主要供Node本身使用</p>
+<p><a href="http://www.w3schools.com/cssref/pr_class_display.asp" target="_blank" rel="external">W3School</a>上通常解释到:</p>
 <blockquote>
-<p>Chai是为开发测试使用的断言库</p>
+<p>inline-block 就是自身表现为inline-level box,内部表现为block-level box的元素。</p>
 </blockquote>
-<h2 id="Chai"><a href="#Chai" class="headerlink" title="Chai"></a>Chai</h2><h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><pre><code>$ npm install chai
-</code></pre><h3 id="BDD-vs-TDD"><a href="#BDD-vs-TDD" class="headerlink" title="BDD vs TDD"></a>BDD vs TDD</h3><p>Chai提供两种类型的断言风格：<strong>TDD</strong>（测试驱动开发）和<strong>BDD</strong>（行为驱动）<br>可以通过这篇<a href="http://joshldavis.com/2013/05/27/difference-between-tdd-and-bdd/" target="_blank" rel="external">文章</a>快速了解两种测试风格的区别</p>
-<blockquote>
-<p>我的理解是BDD的风格更接近<strong>自然语言</strong>，使得写测试程序时思路更符合直觉<br>TDD像是严格的数学公式，是一种严格的<strong>逻辑形式</strong><br>以上纯属一家之言</p>
-</blockquote>
-<h3 id="BDD"><a href="#BDD" class="headerlink" title="BDD"></a>BDD</h3><p>从Chai提供的BDD方法可以很直观的感受到自然语言的形式<br>与BDD对应的是Should和Expect方法</p>
-<h4 id="Should-vs-Expect"><a href="#Should-vs-Expect" class="headerlink" title="Should vs Expect"></a>Should vs Expect</h4><p>二者在实现方式上不同，见注释</p>
-<pre><code>Should:
+<p>那么inline-level 与 block-level 有何区别呢？ </p>
+<h2 id="inline-level"><a href="#inline-level" class="headerlink" title="inline-level"></a><a href="https://developer.mozilla.org/zh-CN/docs/Web/HTML/Inline_elemente" target="_blank" rel="external">inline-level</a></h2><ul>
+<li>一个行内元素只占据它对应标签的边框所包含的空间，无法设置宽和高。</li>
+<li>默认情况下不会出现换行情况</li>
+<li>一般情况下，行内元素只能包含数据和其他行内元素</li>
+</ul>
+<p>该类型元素强调的是行内内容，如文本，行内图片</p>
+<h2 id="block-level"><a href="#block-level" class="headerlink" title="block-level"></a><a href="https://developer.mozilla.org/zh-CN/docs/Web/HTML/Block-level_elements" target="_blank" rel="external">block-level</a></h2><ul>
+<li>会换行，默认情况下不会同一行出现两个blocl-level 元素</li>
+<li>块级元素占据其父元素（容器）的整个空间，也就是宽度尽可能的宽</li>
+<li>一般块级元素可以包含行内元素和其他块级元素。</li>
+</ul>
+<p>该类型元素强调的是段落，区块</p>
+<h2 id="inline-block-VS-inline"><a href="#inline-block-VS-inline" class="headerlink" title="inline-block VS inline"></a><a href="http://stackoverflow.com/questions/9189810/css-display-inline-vs-inline-block" target="_blank" rel="external">inline-block VS inline</a></h2><h3 id="inline-block-元素"><a href="#inline-block-元素" class="headerlink" title="inline-block 元素"></a>inline-block 元素</h3><p>该类型元素在自身布局时，具有inline-level的特性：</p>
+<ul>
+<li>不换行，元元需其他元素在左边和右边</li>
+</ul>
+<p>同时对内部而言具有block-level的特性：</p>
+<ul>
+<li>能够设置height和width</li>
+<li>具有margin和padding属性</li>
+</ul>
+<h3 id="inline-元素"><a href="#inline-元素" class="headerlink" title="inline 元素"></a>inline 元素</h3><ul>
+<li>不换行</li>
+<li>margin属性,仅有margin-left和margin-right生效</li>
+<li>无法设置height和width</li>
+</ul>
+<h2 id="补充"><a href="#补充" class="headerlink" title="补充"></a>补充</h2><p>inline-block 元素的对齐方式是以其内部最后一个inline元素的基线为基准的，因此使用inline-block时经常会出现无法对齐的现象。</p>
+<pre><code>&lt;style&gt;
+    #test{
+        border: solid 1px yellow;
+        font-size: 12px;
+    }
 
-chai.should();
+    #test span{
+        border: solid 1px green;
+    }
 
-//Object对象的原型对象被修改，拥有了should方法。因此foo可以使用should
-foo.should.be.a(&apos;string&apos;);
-foo.should.equal(&apos;bar&apos;);
-foo.should.have.length(3);
-tea.should.have.property(&apos;flavors&apos;)
-  .with.length(3);
+    .inlineBlock{
+        display: inline-block;
+        width: 100px;
+        height: 60px;
+        border: solid 1px red;
+    }
+&lt;/style&gt;
 
+&lt;div id=&apos;test&apos;&gt;
+    &lt;div class=&apos;inlineBlock&apos;&gt;
+    &lt;/div&gt;&lt;div class=&apos;inlineBlock&apos;&gt;
+        &lt;span&gt;first element&lt;/span&gt;&lt;/br&gt;
+        &lt;span&gt;last element&lt;/span&gt;
+    &lt;/div&gt;
+    &lt;div class=&apos;inlineBlock&apos;&gt;&lt;/div&gt;
+&lt;/div&gt;
+</code></pre><style>
+#test{
+    border: solid 1px yellow;
+    font-size: 12px;
+}
 
-Expect:
+#test span{
+    border: solid 1px green;
+}
 
-var expect = chai.expect;
-//并未修改Object对象，通过except构造函数使得foo具有断言方法
-expect(foo).to.be.a(&apos;string&apos;);
-expect(foo).to.equal(&apos;bar&apos;);
-expect(foo).to.have.length(3);
-expect(tea).to.have.property(&apos;flavors&apos;)
-  .with.length(3);
+.inlineBlock{
+    display: inline-block;
+    width: 100px;
+    height: 60px;
+    border: solid 1px red;
+}
+</style>
 
-//使用方法也不同
-var chai = require(&apos;chai&apos;);
-//只需引用
-var expect = chai.expect;
-      //引用后执行对Object对象原型进行修改
-var should = chai.should();
-</code></pre><p>except适用于Node和所有浏览器，should适用于Node和现代浏览器</p>
-<h3 id="TDD"><a href="#TDD" class="headerlink" title="TDD"></a>TDD</h3><p>TDD同Node的Assert同一风格，拓展了更多的功能</p>
-<pre><code>var assert = chai.assert;
+<div id="test"><div class="inlineBlock"></div><div class="inlineBlock"><span>first element</span><br><span>last element</span></div><div class="inlineBlock"></div></div>
 
-assert.typeOf(foo, &apos;string&apos;);
-assert.equal(foo, &apos;bar&apos;);
-assert.lengthOf(foo, 3)
-assert.property(tea, &apos;flavors&apos;);
-assert.lengthOf(tea.flavors, 3);
-</code></pre><h2 id="有趣的BDD风格"><a href="#有趣的BDD风格" class="headerlink" title="有趣的BDD风格"></a>有趣的BDD风格</h2><p>except to do something<br>should have …<br>非常自然的感觉啊<br>根据<a href="http://chaijs.com/api/bdd/" target="_blank" rel="external">BDD文档</a>很快就能掌握断言语句的构造</p>
-<h2 id="下期预告，Mocha-amp-Chai，通过测试框架进行测试"><a href="#下期预告，Mocha-amp-Chai，通过测试框架进行测试" class="headerlink" title="下期预告，Mocha&amp;Chai，通过测试框架进行测试"></a>下期预告，Mocha&amp;Chai，通过测试框架进行测试</h2><blockquote>
-<p>写这篇文章的初衷是面试被问到关于单元测试的问题，完全答不上来<br>平时写代码完全人肉测试，为了成为独当一面的程序员。。。<br>从今往后。。尽量写吧..冏</p>
-</blockquote>
+<h3 id="解决方式"><a href="#解决方式" class="headerlink" title="解决方式"></a>解决方式</h3><p>为修改inline-block 元素的 vertical-align 属性为 top</p>
+<pre><code>&lt;style&gt;
+    .inlineBlock2{
+        vertical-align: top;
+        display: inline-block;
+        width: 100px;
+        height: 60px;
+        border: solid 1px red;        
+    }
+&lt;/style&gt;
+</code></pre><style>
+    .inlineBlock2{
+        vertical-align: top;
+        display: inline-block;
+        width: 100px;
+        height: 60px;
+        border: solid 1px red;        
+    }
+</style>
+
+<div id="test"><div class="inlineBlock2"></div><div class="inlineBlock2"><span>first element</span><br><span>last element</span></div><div class="inlineBlock2"></div></div>
+
+<h2 id="vertical-align"><a href="#vertical-align" class="headerlink" title="vertical-align"></a>vertical-align</h2><p>这个属性对布局的影响比较难描述清楚，我构思好再补上。</p>
 
 		</article>
 	</div>	

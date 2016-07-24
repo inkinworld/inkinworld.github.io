@@ -1,6 +1,6 @@
 body {
     position: relative;
-    font-family: '-apple-system, "Helvetica Neue", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Microsoft JhengHei", "Source Han Sans SC", "Noto Sans CJK SC", "Source Han Sans CN", "Noto Sans SC", "Source Han Sans TC", "Noto Sans CJK TC", "WenQuanYi Micro Hei", SimSun, sans-serif;
+    font-family: '-apple-system, "Helvetica Neue", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Microsoft JhengHei", "Source Han Sans SC", "Noto Sans CJK SC", "Source Han Sans CN", "Noto Sans SC", "Source Han Sans TC", "Noto Sans CJK TC", "WenQuanYi Micro Hei", SimSun, sans-serif';
     font-weight: 400;
     background-color: rgb(102, 151, 193);
     /* overflow: hidden; */
@@ -598,7 +598,7 @@ article{
     .archive-article {
         /* height: 70px; */
         float: left;
-        /* width: 48%; */
+        width: 48%;
         border-left: solid 10px rgb(31, 99, 207);
         margin-bottom: 14px;
         margin-right: 2%;
