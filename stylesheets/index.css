@@ -1,3 +1,7 @@
+::-webkit-scrollbar { 
+    display: none; 
+}
+
 body {
     position: relative;
     font-family: '-apple-system, "Helvetica Neue", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Microsoft JhengHei", "Source Han Sans SC", "Noto Sans CJK SC", "Source Han Sans CN", "Noto Sans SC", "Source Han Sans TC", "Noto Sans CJK TC", "WenQuanYi Micro Hei", SimSun, sans-serif';
@@ -386,7 +390,7 @@ button {
 }
 
 #toc{
-    font-size: 16px;
+    font-size: 20px;
     width: 90%;
     height: 50%;
     position: fixed;
@@ -405,6 +409,7 @@ button {
     -webkit-transform:translateY(150%);
 }
 
+
 #toc li{
     cursor:pointer;
 }
@@ -420,8 +425,8 @@ button {
     list-style-type: none;
 }
 #toc>li{
-    font-size: archive-article.5em;
-    font-weight: 300;
+    font-size: 1.2em;
+    font-weight: 400;
     color:rgb(31, 99, 207);
 }
 
@@ -598,7 +603,7 @@ article{
     .archive-article {
         /* height: 70px; */
         float: left;
-        width: 48%;
+        /*width: 48%;*/
         border-left: solid 10px rgb(31, 99, 207);
         margin-bottom: 14px;
         margin-right: 2%;
