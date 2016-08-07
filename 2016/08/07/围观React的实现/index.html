@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+ 
+ <meta name="description" content="探究React的实现，渲染流程以及更新机制。">
+ 
+
+ 
+ 
+ <meta name="keywords" content="javascript">
+ 
+  
+  <title>面试小结 | Hanhui&#39;s Blog</title>
+  
+  <script src="/javascripts/highlight.js"></script>
+  <link rel="stylesheet" href="/stylesheets/index.css">
+  <link rel="stylesheet" href="/stylesheets/github-markdown.css">
+  <link rel="stylesheet" href="/stylesheets/tomorrow.css">
+	<script>hljs.initHighlightingOnLoad();</script>
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+</head>
+<body>
+
+<header class="index-header">
+	<div class="header-box">
+		<button class="list-button">三</button>
+		<h1 class="blog-name"><a href="/">Hanhui's Blog</a></h1>
+		<button class="nav-button"><</button>
+		<div class="index-nav">
+			<ul>
+			  
+			    <li><a href="/">Home</a></li>
+			  
+			    <li><a href="/archives">Archives</a></li>
+			  
+			    <li><a href="https://github.com/inkinworld">Github</a></li>
+			  
+			</ul>	
+		</div>
+	</div>
+</header>
+
+	<div class="index-list">
+
+	<ul class="head-icon">
+		<li id="index-tip">
+			<img src="/images/head.jpg"><br>
+			<span></span>
+			<p></p>
+		</li>
+		
+			<li style="height:auto;padding:0px">
+				<ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/库/">库</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/教程/">教程</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/笔记/">笔记</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/经历/">经历</a><span class="category-list-count">1</span></li></ul>
+			</li>
+			<li style="height:auto;padding:0px">
+				<ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS/">CSS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Chai/">Chai</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/">Hexo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Node/">Node</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Promise/">Promise</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javascript/">javascript</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/主题制作/">主题制作</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/总结/">总结</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/教程/">教程</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/测试/">测试</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/理解/">理解</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/面试/">面试</a><span class="tag-list-count">1</span></li></ul>
+			</li>
+		
+	</ul>	
+</div>
+	<div class="container">
+	<div class="post-articles">
+		<div class="article-info">
+			<h1 class="article-title">面试小结</h1>
+			
+				
+	<a class="article-tag" href="/tags/javascript/">javascript</a>
+	
+			
+			<span class="article-time">2016-08-07</span>
+		</div>		
+		<article class="markdown-body markdown shadow-set">
+			<blockquote>
+<p>无意间看到一个前辈（<a href="http://purplebamboo.github.io/" target="_blank" rel="external">purplebamboo</a>）的博客，瞬间觉得路漫漫其修远兮。<br>其中关于React的实现的文章非常精彩，看完之后做了如下的总结。<a href="http://purplebamboo.github.io/2015/09/15/reactjs_source_analyze_part_one/" target="_blank" rel="external">原文</a> </p>
+</blockquote>
+<a id="more"></a>
+<p>虽然很多概念文档都有涉及，但看过具体的实现，才有了更清晰的认识。</p>
+<h2 id="渲染流程"><a href="#渲染流程" class="headerlink" title="渲染流程"></a>渲染流程</h2><h3 id="组件从声明到渲染的流程"><a href="#组件从声明到渲染的流程" class="headerlink" title="组件从声明到渲染的流程"></a>组件从声明到渲染的流程</h3><pre><code>1.使用React.createClass方法声明一个组件，定义组件的生命周期行为，内部方法
+2.使用React.createElement方法，生成特定类型，特定属性，特定子元素的虚拟DOM节点（ractElement Object）
+3.使用React.render方法，将虚拟DOM节点（ractElement Object）生成对应的组件实例，并作用于真实DOM节点内。
+</code></pre><h3 id="数据类型变化过程"><a href="#数据类型变化过程" class="headerlink" title="数据类型变化过程"></a>数据类型变化过程</h3><blockquote>
+<p>component Class -&gt;　ractElement Object　-&gt; component instance</p>
+</blockquote>
+<pre><code>- component Class: [function] 一个构造函数
+- ractElement Object：[object] 可以通过任意形式声明的Javascript对象（带有type,key,props属性）
+- component instance： [DOM NODE] 真实的DOM NODE 
+</code></pre><p>值得留意的是，React希望人们不要过多的关注 component instance，由于虚拟DOM的概念，推荐开发者通过该变ractElement Object的属性来实现实例的变化，而不是直接进行DOM操作。</p>
+<p>这是因为React不仅局限于浏览器平台，React Native希望应用于更广的应用开发领域。（因此区分为React以及React Dom两个模块）</p>
+<p>同时React组件的理念是render方法是一台状态机，通过ractElement Object staet的变化渲染出结果。结合这样的特性配合Flux思想，构造状态可预测的但也应用。</p>
+<p>贸然直接操纵DOM 节点，将导致状态机的状态与输出结果不匹配，造成混乱。</p>
+<h2 id="React对象"><a href="#React对象" class="headerlink" title="React对象"></a>React对象</h2><h3 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h3><ul>
+<li><p>craeteClass: </p>
+<p>  [描述] 继承ReactClass类，返回生成组件实例的构造函数</p>
+<p>  参数 ：[object] object(可定义该类组件生命周期中的方法：getInitialState，componentWillMount，componentDidMount，render以及组件特有的方法，如事件函数，数据处理方法)</p>
+<p>  输出 ：[function] 生成组件实例的构造函数</p>
+<pre><code>**组件构造函数**
+
+    [描述] 根据返回一个该类型组件的ractElement Object(虚拟DOM节点)
+
+    参数：
+
+        - porps [object] 组件实例的属性
+
+    输出：组件实例
+</code></pre></li>
+<li><p>createElement： </p>
+<p>  [描述] 根据参数生成虚拟DOM节点</p>
+<p>  参数 :</p>
+<pre><code>- type: [number|string|function]创建元素的类型（文本|DOM|组件） 
+- config: [object] 设置元素属性
+- children：[object] 设置该元素的子元素，子元素属性不属于config设置
+</code></pre><p>  输出 ：[object] ractElement Object(虚拟DOM节点)</p>
+</li>
+<li><p>render：</p>
+<p>  [描述] 将ractElement Object渲染生成组件实例，并作用于一个真实DOM节点内。</p>
+<p>  参数 :</p>
+<pre><code>- element：[object] ractElement Object(虚拟DOM节点)
+- container: DOM element(真实DOM节点)
+</code></pre></li>
+</ul>
+<h2 id="更新机制"><a href="#更新机制" class="headerlink" title="更新机制"></a>更新机制</h2><p>这才是重头戏，才是React理念的核心。</p>
+
+		</article>
+	</div>	
+	<div class="toc-button"></div>
+
+<script type="text/javascript">
+function create_toc(){
+	var toc = [];
+	var article = document.querySelector('article');
+	if(article){
+		var list = article.querySelectorAll('*');
+		for(var j= i = 0; i < list.length;i++){
+			if(list[i].tagName == 'H3' || list[i].tagName == 'H2'){
+				list[i].id = 'toc' + j++;
+				toc.push(list[i])
+			}
+		}
+
+		var ul = document.createElement('ul');
+		var div_box = document.createElement('div');
+		ul.appendChild(div_box);
+		ul.id = "toc";
+		var ul2;
+		var is_first_h3 = true;
+		toc.forEach(function(e,i){
+			if(e.tagName == 'H2'){
+				is_first_h3 = true;
+				var h2 = document.createElement('li');
+				h2.innerText = e.innerText;
+				h2.tar = '#toc' + i;
+				ul.appendChild(h2);
+			}else{
+				if(is_first_h3){
+					is_first_h3 = false;
+					ul2 = document.createElement('ul');
+					ul.appendChild(ul2);
+				}
+				var h3 = document.createElement('li');
+				h3.innerText = e.innerText;
+				h3.tar = '#toc' + i;
+				ul2.appendChild(h3);
+			}
+		})
+
+		var parent_ele = document.querySelector('body');	
+		parent_ele.appendChild(ul);
+
+	}
+}
+
+create_toc();
+//委托toc事件
+var body = document.querySelector('body');
+var toc = document.querySelector('#toc');
+toc.addEventListener('click',function(evt){
+	var target = evt.target;
+	if(target.tagName == 'LI'){
+		body.scrollTop = 1000;
+		var move = document.querySelector(target.tar).offsetTop;
+		body.scrollTop = move - 120;
+	}
+})
+//为toc绑定按钮
+var toc_button = document.querySelector('.toc-button')
+toc_button.addEventListener('click',function(evt){
+	evt.target.classList.toggle('open');
+	toc.classList.toggle('open');
+})
+
+</script>
+	 
+
+<!-- DISQUS -->
+
+</div>
+</article>
+<div class="footer">
+      &copy; 2016 Hnahui
+       <a href="https://github.com/inkinworld/Hexo-theme-Han" target="_blank">Hexo Han</a>
+       <span id="busuanzi_container_site_pv">本站总访问量<span id="busuanzi_value_site_pv"></span>次</span>
+</div>
+</body>
+</html>
+<script type="text/javascript">
+	var list_button = document.querySelector('.list-button');
+	var nav_button = document.querySelector('.nav-button')
+	var list = document.querySelector('.index-list');
+	var header = document.querySelector('header');
+	var nav = document.querySelector('.index-nav');
+	var blog_name = document.querySelector('.blog-name')
+
+	list_button.addEventListener('click',function(evt){
+		evt.target.classList.toggle('open')
+		list.classList.toggle('open')
+		header.classList.toggle('open')
+	},true)
+
+	nav_button.addEventListener('click',function(evt){
+		evt.target.classList.toggle('open1');
+		header.classList.toggle('open1');
+		list_button.classList.toggle('open1');
+		blog_name.classList.toggle('open1');
+	})
+</script>
