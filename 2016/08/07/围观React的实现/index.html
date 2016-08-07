@@ -83,9 +83,9 @@
 </code></pre><h3 id="数据类型变化过程"><a href="#数据类型变化过程" class="headerlink" title="数据类型变化过程"></a>数据类型变化过程</h3><blockquote>
 <p>component Class -&gt;　ractElement Object　-&gt; component instance</p>
 </blockquote>
-<pre><code>- component Class: [function] 一个构造函数
-- ractElement Object：[object] 可以通过任意形式声明的Javascript对象（带有type,key,props属性）
-- component instance： [DOM NODE] 真实的DOM NODE 
+<pre><code>component Class: [function] 一个构造函数
+ractElement Object：[object] 可以通过任意形式声明的Javascript对象（带有type,key,props属性）
+component instance： [DOM NODE] 真实的DOM NODE 
 </code></pre><p>值得留意的是，React希望人们不要过多的关注 component instance，由于虚拟DOM的概念，推荐开发者通过该变ractElement Object的属性来实现实例的变化，而不是直接进行DOM操作。</p>
 <p>这是因为React不仅局限于浏览器平台，React Native希望应用于更广的应用开发领域。（因此区分为React以及React Dom两个模块）</p>
 <p>同时React组件的理念是render方法是一台状态机，通过ractElement Object staet的变化渲染出结果。结合这样的特性配合Flux思想，构造状态可预测的但也应用。</p>
@@ -93,36 +93,31 @@
 <h2 id="React对象"><a href="#React对象" class="headerlink" title="React对象"></a>React对象</h2><h3 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h3><ul>
 <li><p>craeteClass: </p>
 <p>  [描述] 继承ReactClass类，返回生成组件实例的构造函数</p>
-<p>  参数 ：[object] object(可定义该类组件生命周期中的方法：getInitialState，componentWillMount，componentDidMount，render以及组件特有的方法，如事件函数，数据处理方法)</p>
-<p>  输出 ：[function] 生成组件实例的构造函数</p>
-<p>  <strong>组件构造函数</strong></p>
+<p>  参数 ：</p>
+<pre><code>[object] object(可定义该类组件生命周期中的方法：getInitialState，componentWillMount，componentDidMount，render以及组件特有的方法，如事件函数，数据处理方法)
+</code></pre><p>  输出 ：</p>
+<pre><code>[function] 生成组件实例的构造函数
+</code></pre><p>  <strong>组件构造函数</strong></p>
 <pre><code>[描述] 根据返回一个该类型组件的ractElement Object(虚拟DOM节点)
 
-参数：
-
-    - porps [object] 组件实例的属性
+参数： porps [object] 组件实例的属性
 
 输出：组件实例
 </code></pre></li>
 <li><p>createElement： </p>
 <p>  [描述] 根据参数生成虚拟DOM节点</p>
 <p>  参数 :</p>
-<ul>
-<li>type: [number|string|function]创建元素的类型（文本|DOM|组件） </li>
-<li>config: [object] 设置元素属性</li>
-<li><p>children：[object] 设置该元素的子元素，子元素属性不属于config设置</p>
-<p>输出 ：[object] ractElement Object(虚拟DOM节点)</p>
-</li>
-</ul>
+<pre><code>type: [number|string|function]创建元素的类型（文本|DOM|组件） 
+config: [object] 设置元素属性
+children：[object] 设置该元素的子元素，子元素属性不属于config设置
+</code></pre><p>  输出 ：[object] ractElement Object(虚拟DOM节点)</p>
 </li>
 <li><p>render：</p>
 <p>  [描述] 将ractElement Object渲染生成组件实例，并作用于一个真实DOM节点内。</p>
 <p>  参数 :</p>
-<ul>
-<li>element：[object] ractElement Object(虚拟DOM节点)</li>
-<li>container: DOM element(真实DOM节点)</li>
-</ul>
-</li>
+<pre><code>element：[object] ractElement Object(虚拟DOM节点)
+container: DOM element(真实DOM节点)
+</code></pre></li>
 </ul>
 <h2 id="更新机制"><a href="#更新机制" class="headerlink" title="更新机制"></a>更新机制</h2><p>这才是重头戏，才是React理念的核心。</p>
 
