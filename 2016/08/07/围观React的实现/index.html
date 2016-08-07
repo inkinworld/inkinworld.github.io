@@ -12,7 +12,7 @@
  <meta name="keywords" content="javascript">
  
   
-  <title>面试小结 | Hanhui&#39;s Blog</title>
+  <title>围观React的实现 | Hanhui&#39;s Blog</title>
   
   <script src="/javascripts/highlight.js"></script>
   <link rel="stylesheet" href="/stylesheets/index.css">
@@ -63,7 +63,7 @@
 	<div class="container">
 	<div class="post-articles">
 		<div class="article-info">
-			<h1 class="article-title">面试小结</h1>
+			<h1 class="article-title">围观React的实现</h1>
 			
 				
 	<a class="article-tag" href="/tags/javascript/">javascript</a>
@@ -95,30 +95,34 @@
 <p>  [描述] 继承ReactClass类，返回生成组件实例的构造函数</p>
 <p>  参数 ：[object] object(可定义该类组件生命周期中的方法：getInitialState，componentWillMount，componentDidMount，render以及组件特有的方法，如事件函数，数据处理方法)</p>
 <p>  输出 ：[function] 生成组件实例的构造函数</p>
-<pre><code>**组件构造函数**
+<p>  <strong>组件构造函数</strong></p>
+<pre><code>[描述] 根据返回一个该类型组件的ractElement Object(虚拟DOM节点)
 
-    [描述] 根据返回一个该类型组件的ractElement Object(虚拟DOM节点)
+参数：
 
-    参数：
+    - porps [object] 组件实例的属性
 
-        - porps [object] 组件实例的属性
-
-    输出：组件实例
+输出：组件实例
 </code></pre></li>
 <li><p>createElement： </p>
 <p>  [描述] 根据参数生成虚拟DOM节点</p>
 <p>  参数 :</p>
-<pre><code>- type: [number|string|function]创建元素的类型（文本|DOM|组件） 
-- config: [object] 设置元素属性
-- children：[object] 设置该元素的子元素，子元素属性不属于config设置
-</code></pre><p>  输出 ：[object] ractElement Object(虚拟DOM节点)</p>
+<ul>
+<li>type: [number|string|function]创建元素的类型（文本|DOM|组件） </li>
+<li>config: [object] 设置元素属性</li>
+<li><p>children：[object] 设置该元素的子元素，子元素属性不属于config设置</p>
+<p>输出 ：[object] ractElement Object(虚拟DOM节点)</p>
+</li>
+</ul>
 </li>
 <li><p>render：</p>
 <p>  [描述] 将ractElement Object渲染生成组件实例，并作用于一个真实DOM节点内。</p>
 <p>  参数 :</p>
-<pre><code>- element：[object] ractElement Object(虚拟DOM节点)
-- container: DOM element(真实DOM节点)
-</code></pre></li>
+<ul>
+<li>element：[object] ractElement Object(虚拟DOM节点)</li>
+<li>container: DOM element(真实DOM节点)</li>
+</ul>
+</li>
 </ul>
 <h2 id="更新机制"><a href="#更新机制" class="headerlink" title="更新机制"></a>更新机制</h2><p>这才是重头戏，才是React理念的核心。</p>
 
