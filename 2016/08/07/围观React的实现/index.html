@@ -73,9 +73,10 @@
 		</div>		
 		<article class="markdown-body markdown shadow-set">
 			<blockquote>
-<p>无意间看到一个前辈（<a href="http://purplebamboo.github.io/" target="_blank" rel="external">purplebamboo</a>）的博客，瞬间觉得路漫漫其修远兮。<br>其中关于React的实现的文章非常精彩，看完之后做了如下的总结。<a href="http://purplebamboo.github.io/2015/09/15/reactjs_source_analyze_part_one/" target="_blank" rel="external">原文</a> </p>
+<p>无意间看到一个前辈（<a href="http://purplebamboo.github.io/" target="_blank" rel="external">purplebamboo</a>）的博客<br>其中关于React的实现的文章非常精彩，看完之后做了如下的总结。<a href="http://purplebamboo.github.io/2015/09/15/reactjs_source_analyze_part_one/" target="_blank" rel="external">原文</a> </p>
 </blockquote>
 <a id="more"></a>
+<p>这篇文章主要侧重于react的组件生命周期过程以及更新方式的实现。</p>
 <p>虽然很多概念文档都有涉及，但看过具体的实现，才有了更清晰的认识。</p>
 <h2 id="渲染流程"><a href="#渲染流程" class="headerlink" title="渲染流程"></a>渲染流程</h2><h3 id="组件从声明到渲染的流程"><a href="#组件从声明到渲染的流程" class="headerlink" title="组件从声明到渲染的流程"></a>组件从声明到渲染的流程</h3><pre><code>1.使用React.createClass方法声明一个组件，定义组件的生命周期行为，内部方法
 2.使用React.createElement方法，生成特定类型，特定属性，特定子元素的虚拟DOM节点（ractElement Object）
@@ -120,6 +121,22 @@ container: DOM element(真实DOM节点)
 </code></pre></li>
 </ul>
 <h2 id="更新机制"><a href="#更新机制" class="headerlink" title="更新机制"></a>更新机制</h2><p>这才是重头戏，才是React理念的核心。</p>
+<p>概括来说，React的更新策略分为两步：</p>
+<pre><code>1.diff,找出元素发生的变动，把每个**变动**（在父元素中的顺序，是否删除，是否新增）用一个Object表示存入更新队列diffQueue中
+2.path,将diffQueue中的变动作用于真实的Dom树上。
+</code></pre><h3 id="diff过程"><a href="#diff过程" class="headerlink" title="diff过程"></a>diff过程</h3><p>同mount过程一样，使用递归的方式，自上而下，逐级比较，并直接对各层组件<strong>属性</strong>（特指props,不包含在父元素中的顺序，是否删除，是否新增这些信息）进行更新。将每个组件的<strong>变动</strong>（在父元素中的顺序，是否删除，是否新增）用一个Object表示存入更新队列diffQueue中。<br>也就是说，此时组件树包含着：</p>
+<pre><code>1.无需删除且属性已更新的组件
+2.需要被删除的组件
+</code></pre><p>如果要完成更新还需要：</p>
+<pre><code>1.删除不需要的组件
+2.将继续使用的组件放在正确的位置
+3.添加新增的组件
+</code></pre><h3 id="path过程"><a href="#path过程" class="headerlink" title="path过程"></a>path过程</h3><p>path即完成</p>
+<pre><code>1.删除不需要的组件
+2.将继续使用的组件放在正确的位置
+3.添加新增的组件
+</code></pre><p>这三点工作的过程。</p>
+<p>我觉得，光用语言难以表达对代码的理解，还是需要流程图的。<br>再次感谢原文作者的指点。</p>
 
 		</article>
 	</div>	
