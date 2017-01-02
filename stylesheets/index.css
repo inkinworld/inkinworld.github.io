@@ -5,7 +5,7 @@
 body {
     position: relative;
     font-family: '-apple-system, "Helvetica Neue", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Microsoft JhengHei", "Source Han Sans SC", "Noto Sans CJK SC", "Source Han Sans CN", "Noto Sans SC", "Source Han Sans TC", "Noto Sans CJK TC", "WenQuanYi Micro Hei", SimSun, sans-serif';
-    font-weight: 400;
+    /* font-weight: 400; */
     background-color: rgb(102, 151, 193);
     /* overflow: hidden; */
 }
@@ -34,6 +34,7 @@ body{
 a{
 	color: inherit;
 	text-decoration: none;
+	/* vertical-align: middle; */
 }
 
 body {
@@ -83,30 +84,31 @@ button {
     background-color: rgb(102, 151, 193);
     color: rgb(255, 255, 255);
     display: inline-block;
-    height: 24px;
+    height: 20px;
     width: 30px;
     border-radius: 8px;
     text-align: center;
-    font-size: 18px;
-    line-height: 26px;
+    font-size: 14px;
+    line-height: 20px;
     position: absolute;
     right: 20px;
-    top: 13px;
+    top: 7px;
     box-shadow: 0 3px 5px rgb(78, 72, 72);
 }
 .tag-list-count{
     background-color: rgb(102, 151, 193);
     color: rgb(255, 255, 255);
     display: inline-block;
-    height: 24px;
+    height: 20px;
     padding-left:10px;
     padding-right: 10px;
     margin-left: 5px;
     border-radius: 8px;
     text-align: center;
-    font-size: 18px;
-    line-height: 24px;
+    font-size: 14px;
+    line-height: 20px;
     box-shadow: 0 3px 5px rgb(78, 72, 72);
+    vertical-align: middle;
 }
 
 .index-header {
@@ -211,17 +213,17 @@ button {
 
 .index-list ul > li {
     /* border-bottom: solid 1px #c9daf8; */
-    height: 60px;
-    font-size: 24px;
-    line-height: 60px;
+    height: 40px;
+    font-size: 18px;
+    line-height: 40px;
     padding: 0 20px;
 }
 
 .index-nav ul > li {
     /* border-bottom: solid 1px white; */
-    height: 50px;
-    font-size: 24px;
-    line-height: 50px;
+    height: 40px;
+    font-size: 16px;
+    line-height: 40px;
     padding: 0 20px;
     transition: .3s;
 }
@@ -248,6 +250,7 @@ button {
     height: 100px;
     width: 100px;
     margin-top: 30px;
+    margin-bottom: 14px;
 }
 
 .index-articles {
@@ -275,6 +278,8 @@ button {
     background-color: white;
     padding: 5px 10px;
     padding-left: 20px;
+    padding-top: 10px;
+    padding-bottom: 10px;
     box-shadow: 0 3px 5px rgb(78, 72, 72);
     transition: 0.3s;
 }
@@ -289,8 +294,11 @@ button {
 
 .index-date {
     font-weight: 400;
-    color: rgb(53, 127, 222);
+    color: rgb(58, 164, 255);
     font-size: 14px;
+    margin-top: 6px;
+    padding-bottom: 2px;
+    display: inline-block;
 }
 
 .index-view {
@@ -319,28 +327,31 @@ button {
 }
 .article-title{
 	font-size: 36px;
-	color: #ebebeb;
+	color: rgb(248, 248, 248);
 	display: inline-block;
 	margin-right: 10px;
 	margin-bottom: 5px;
 }
 
 .article-time{
-	color: #eee;
+	color: rgb(240, 244, 245);
 	font-size: 16px;
 	font-weight: 400;
 	display: block;
+	margin-top: 10px;
 }
 
 .article-tag{
-	background-color: rgba(0, 0, 0, 0.3);
+	background-color: rgb(53, 127, 222);
 	border-radius: 5px;
 	padding: 0px 10px;
-	height: 20px;
-	line-height: 20px;
+	height: 30px;
+	display: inline-block;
+	line-height: 30px;
 	position: relative;
+	vertical-align: middle;
 	bottom: 4px;
-	color: rgb(210, 210, 210);
+	color: rgb(248, 248, 248);
 }
 
 .container {
@@ -390,7 +401,7 @@ button {
 }
 
 #toc{
-    font-size: 20px;
+    font-size: 16px;
     width: 90%;
     height: 50%;
     position: fixed;
@@ -412,6 +423,8 @@ button {
 
 #toc li{
     cursor:pointer;
+    line-height: 1.5;
+    color: rgb(96, 143, 204);
 }
 #toc li:hover{
     color: rgb(65, 131, 196);
@@ -426,7 +439,8 @@ button {
 }
 #toc>li{
     font-size: 1.2em;
-    font-weight: 400;
+    /* font-weight: 400; */
+    line-height: 1.7;
     color:rgb(31, 99, 207);
 }
 
@@ -481,7 +495,7 @@ button {
 }
 
 .index-header.open1 {
-    height: 260px;
+    height: 180px;
 }
 
 .nav-button.open1 {
@@ -540,7 +554,7 @@ article{
         padding-top: 110px;
     }
     .index-header {
-        height: 100px;
+        height: 80px;
         padding: 0 20px;
         -webkit-transition: none;
         transition: none;
@@ -553,11 +567,11 @@ article{
     }
     .index-nav {
         height: 30px;
-        margin-top: 35px;
+        margin-top: 25px;
         display: inline-block;
         background-image: none;
         width: auto;
-        vertical-align: top;
+        vertical-align: middle;
         float: right;
     }
     .index-nav ul li {
@@ -584,8 +598,8 @@ article{
         border: solid 1px rgba(149, 129, 129, 0.28);
     }
     .blog-name {
-        font-size: 40px;
-        line-height: 100px;
+        font-size: 30px;
+        line-height: 80px;
         margin: 0 10px;
     }
     .index-list {
@@ -625,7 +639,7 @@ article{
         width: 960px;
         /* height: 600px; */
         margin: 0 auto;
-        padding-top: 130px;
+        padding-top: 100px;
         /* margin-bottom: 20px; */
     }
     .index-list {
@@ -648,8 +662,9 @@ article{
         padding-bottom: 40px;
     }
     .head-icon li {
-        height: 50px;
-        line-height: 50px;
+        height: 40px;
+        font-size: 18px;
+        line-height: 40px;
         padding-left: 10px;
         /* border-bottom: solid 1px rgb(201, 218, 248); */
     }

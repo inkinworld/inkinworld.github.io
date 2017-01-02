@@ -8,7 +8,7 @@
   text-size-adjust: 100%;
   color: #333;
   font-family: -apple-system, "Helvetica Neue", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Microsoft JhengHei", "Source Han Sans SC", "Noto Sans CJK SC", "Source Han Sans CN", "Noto Sans SC", "Source Han Sans TC", "Noto Sans CJK TC", "WenQuanYi Micro Hei", SimSun, sans-serif;
-  font-size: 20px;
+  font-size: 14px;
   line-height: 1.7;
   word-wrap: break-word;
   background-color: #f8f8f8;
@@ -391,6 +391,9 @@
 
 .markdown-body blockquote {
   padding: 0 15px;
+  /* margin-top: 10px; */
+  padding-top: 10px;
+  padding-bottom: 10px;
   color: rgb(119, 119, 119);
   border-left: 4px solid rgb(53, 127, 222);
   background-color: white;
