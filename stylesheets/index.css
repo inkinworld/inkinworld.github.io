@@ -214,7 +214,7 @@ button {
 .index-list ul > li {
     /* border-bottom: solid 1px #c9daf8; */
     height: 40px;
-    font-size: 18px;
+    font-size: 16px;
     line-height: 40px;
     padding: 0 20px;
 }
@@ -278,8 +278,8 @@ button {
     background-color: white;
     padding: 5px 10px;
     padding-left: 20px;
-    padding-top: 10px;
-    padding-bottom: 10px;
+    padding-top: 15px;
+    padding-bottom: 0px;
     box-shadow: 0 3px 5px rgb(78, 72, 72);
     transition: 0.3s;
 }
@@ -594,7 +594,7 @@ article{
     .list-button {
         width: 40px;
         height: 40px;
-        margin-top: 30px;
+        margin-top: 20px;
         border: solid 1px rgba(149, 129, 129, 0.28);
     }
     .blog-name {
@@ -603,7 +603,7 @@ article{
         margin: 0 10px;
     }
     .index-list {
-        top: 100px;
+        top: 80px;
         font-size: 40px;
         display: inline-block;
         box-shadow: 3px 5px 10px rgb(108, 108, 108);
@@ -622,7 +622,7 @@ article{
         margin-bottom: 14px;
         margin-right: 2%;
         background-color: white;
-        padding: 5px 10px;
+        padding: 15px 10px;
         box-shadow: 0 3px 5px rgb(78, 72, 72);
         transition: 0.3s;
     }
